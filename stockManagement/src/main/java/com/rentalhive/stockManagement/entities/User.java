@@ -13,9 +13,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.rentalhive.stockManagement.embeddables.AddressEmail;
 import com.rentalhive.stockManagement.embeddables.FullName;
+import com.rentalhive.stockManagement.embeddables.Password;
 
 import lombok.Getter;
 import lombok.Setter;
