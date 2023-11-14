@@ -30,14 +30,14 @@ public class Password {
     }
 
     public Password(String non_hashed_password) {
-        this.hashed_password = non_hashed_password;
+        this.hashed_password = hashPassword(non_hashed_password);
     }
 
     public boolean isHashedPasswordEqualsNonHashedPassword(String non_hashed_password) {
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        return bCryptPasswordEncoder.matches(hashed_password, non_hashed_password); 
+        return bCryptPasswordEncoder.matches(hashed_password, non_hashed_password);
     }
 
     public String hashPassword(String non_hashed_password) {
