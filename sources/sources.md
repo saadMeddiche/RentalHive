@@ -5,3 +5,7 @@ Source 2 : https://www.educative.io/answers/what-is-the-data-annotation-in-lombo
 
 # Hash Password Using bcrypt algorithm
 Source 1 : https://nullbeans.com/hashing-passwords-in-spring-applications/#bcrypt
+
+
+# Main Sources :
+Source 1 : https://www.bezkoder.com/spring-boot-jpa-crud-rest-api/
