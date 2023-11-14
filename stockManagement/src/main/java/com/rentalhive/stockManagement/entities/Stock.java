@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-
 @Entity
 @Data
 public class Stock {
@@ -17,13 +16,13 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "The user name can not be null")
+    @NotNull(message = "The equipment can not be null")
     private Equipment equipment;
 
-    @NotNull(message = "The user name can not be null")
+    @NotNull(message = "The category can not be null")
     private Category category;
 
-    @NotNull(message = "The user name can not be null")
+    @NotNull(message = "The user that added the equipment in the stock can not be null")
     private User added_by;
 
 }
