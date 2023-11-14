@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,13 +34,17 @@ public class Password {
     }
 
     public boolean isHashedPasswordEqualsNonHashedPassword(String non_hashed_password) {
-        
-        return hashed_password.equals(non_hashed_password); // Comapare hashed with non hashed password (Just algorithm)
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        return bCryptPasswordEncoder.matches(hashed_password, non_hashed_password); 
     }
 
     public String hashPassword(String non_hashed_password) {
 
-        String hashed_password = non_hashed_password; // Hash Password (Just algoriithm)
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        String hashed_password = bCryptPasswordEncoder.encode(non_hashed_password);
 
         return hashed_password;
     }
