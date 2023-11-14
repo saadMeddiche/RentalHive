@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -44,5 +45,22 @@ public class Demande {
 
     @NotNull(message = "The date of demande can not be null")
     private LocalDateTime date_demande;
+
+    public Demande() {
+
+    }
+
+    public Demande(User renter, String description, Boolean accepted, User verified_by,
+            LocalDateTime date_verification, LocalDateTime date_reservation, LocalDateTime date_expiration,
+            LocalDateTime date_demande) {
+        this.renter = renter;
+        this.description = description;
+        this.accepted = accepted;
+        this.verified_by = verified_by;
+        this.date_verification = date_verification;
+        this.date_reservation = date_reservation;
+        this.date_expiration = date_expiration;
+        this.date_demande = date_demande;
+    }
 
 }

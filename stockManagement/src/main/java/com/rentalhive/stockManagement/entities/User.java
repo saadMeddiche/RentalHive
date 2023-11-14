@@ -49,4 +49,5 @@ public class User {
 
     @NotNull(message = "The date of creation of account can npt be null")
     private LocalDateTime date_creation_account;
+
 }
