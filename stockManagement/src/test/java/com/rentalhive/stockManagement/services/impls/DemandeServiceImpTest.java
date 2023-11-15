@@ -73,13 +73,25 @@ public class DemandeServiceImpTest {
             resetTheAttributes();
         }
 
+        /**
+         * Test case to verify that no Exception is thrown when all is good.
+         *
+         * @param  None
+         * @return None
+         */
         @Test
-        public void whenAllIsGood_thenShouldNotThrowIllegalArgument() {
+        public void whenAllIsGood_thenShouldNotException() {
             assertDoesNotThrow(() -> {
                 demandeServiceImp.addDemande(createDemande());
             });
         }
 
+        /**
+         * Generates a stream of dynamic tests for the scenario when adding a demande that is verified from the beginning.
+         * If the demande is verified by a user, has a verification date and is accepted, then adding the demande should throw a ValidationException.
+         *
+         * @return         	A stream of dynamic tests
+         */
         @TestFactory
         public Stream<DynamicTest> whenAddingADemandeThatIsVerifiedFromTheBegining_thenShouldThrowValidationException() {
 
@@ -111,6 +123,12 @@ public class DemandeServiceImpTest {
 
         }
 
+        /**
+         * Generate a stream of dynamic tests for when something is wrong with the dates,
+         * then throw an IllegalArgumentException.
+         *
+         * @return  a stream of dynamic tests
+         */
         @TestFactory
         public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowIllegalArgument() {
 
@@ -147,6 +165,14 @@ public class DemandeServiceImpTest {
             }));
         }
 
+        /**
+         * This function creates a stream of dynamic tests for the scenario when non-nullable attributes are null,
+         * and it expects a ValidationException to be thrown. It adds various Demande objects to a list with null
+         * attribute values, and then resets the attributes after each addition. Finally, it maps each Demande to a
+         * dynamic test and asserts that adding the Demande to the DemandeServiceImp object throws a ValidationException.
+         *
+         * @return a stream of dynamic tests
+         */
         @TestFactory
         public Stream<DynamicTest> whenNonNullableAttributeAreNull_thenShouldThrowValidationException() {
 
@@ -154,22 +180,27 @@ public class DemandeServiceImpTest {
 
             demands.add(null);
 
+            // Demande With Null Description
             description = null;
             demands.add(createDemande());
             resetTheAttributes();
 
+            // Demande With Null Renter
             renter = null;
             demands.add(createDemande());
             resetTheAttributes();
 
+            // Demande With Null Date Expiration
             date_expiration = null;
             demands.add(createDemande());
             resetTheAttributes();
 
+            // Demande With Null Date Reservation
             date_reservation = null;
             demands.add(createDemande());
             resetTheAttributes();
 
+            // Demande With Null Date Demande
             date_demande = null;
             demands.add(createDemande());
             resetTheAttributes();
@@ -182,6 +213,12 @@ public class DemandeServiceImpTest {
 
         }
 
+        /**
+         * Reset all the attributes of the nested class addDemande.
+         *
+         * @param  None
+         * @return None
+         */
         public void resetTheAttributes() {
             this.renter = new User();
             this.verified_by = null;
@@ -193,12 +230,23 @@ public class DemandeServiceImpTest {
             this.date_demande = getDateTime("2004-01-01T12:00:00");
         }
 
+        /**
+         * Create a Demande object with the attribute of nested class addDemande.
+         *
+         * @return  The created Demande object.
+         */
         public Demande createDemande() {
             return new Demande(renter, description, accepted, verified_by, date_verification, date_reservation,
                     date_expiration, date_demande);
         }
     }
 
+    /**
+     * Parses the given date string and returns a LocalDateTime object.
+     *
+     * @param  date  the date string to be parsed in the format "yyyy-MM-dd'T'HH:mm:ss"
+     * @return       a LocalDateTime object representing the parsed date, or null if the input string is null
+     */
     public LocalDateTime getDateTime(String date) {
 
         return (date != null) ? LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) : null;
