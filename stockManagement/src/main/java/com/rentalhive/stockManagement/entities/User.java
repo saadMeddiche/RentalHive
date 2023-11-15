@@ -19,10 +19,9 @@ import com.rentalhive.stockManagement.embeddables.Password;
 
 import lombok.Getter;
 import lombok.Setter;
-
+import lombok.Data;
 @Entity
-@Getter
-@Setter
+@Data
 public class User {
 
     @Id
