@@ -1,13 +1,10 @@
-package com.rentalhive.stockManagement.services;
+package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.embeddables.AddressEmail;
 import com.rentalhive.stockManagement.embeddables.FullName;
 import com.rentalhive.stockManagement.embeddables.Password;
 import com.rentalhive.stockManagement.entities.*;
-import com.rentalhive.stockManagement.services.implementes.CategoryServiceImp;
 import com.rentalhive.stockManagement.repositories.StockRepository;
-import com.rentalhive.stockManagement.services.implementes.StatusServiceImp;
-import com.rentalhive.stockManagement.services.implementes.StockServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -21,12 +18,16 @@ import static org.mockito.Mockito.when;
 class StockServiceTest {
     private StockServiceImp stockServiceImp;
     private StatusServiceImp statusServiceImp;
+    private UserServiceImp userServiceImp;
+    private EquipmentServiceImp equipmentServiceImp;
     private StockRepository stockRepository;
 
     @BeforeEach
     public void setUp() {
         stockRepository = mock(StockRepository.class);
         statusServiceImp = mock(StatusServiceImp.class);
+        userServiceImp = mock(UserServiceImp.class);
+        equipmentServiceImp = mock(EquipmentServiceImp.class);
         stockServiceImp = new StockServiceImp(stockRepository);
     }
     private Stock createValidStock() {
@@ -66,13 +67,44 @@ class StockServiceTest {
 
         Stock stock = createValidStock();
         Status status = createValidStatus();
-
+        Equipment equipment = createValidEquipment();
+        User user=createValidUser();
+        when(userServiceImp.findById(1L)).thenReturn(Optional.of(user));
         when(statusServiceImp.findById(1L)).thenReturn(Optional.of(status));
+        when(equipmentServiceImp.findById(1L)).thenReturn(Optional.of(equipment));
         when(stockRepository.save(stock)).thenReturn(stock);
 
         Stock stockRes = stockServiceImp.addStock(stock);
         assertEquals(stockRes, stock);
     }
+
+    @Test
+    void testAddStockWhenUserNotFoundThenThrowNotFoundException(){
+        Stock stock = createValidStock();
+        when(userServiceImp.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class,stockServiceImp.addStock(stock));
+    }
+
+    @Test
+    void testAddStockWhenEquipmentNotFoundThenThrowNotFoundException(){
+        Stock stock = createValidStock();
+        User user=createValidUser();
+        when(userServiceImp.findById(1L)).thenReturn(Optional.of(user));
+        when(equipmentServiceImp.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(EquipmentNotFoundException.class,stockServiceImp.addStock(stock));
+    }
+    @Test
+    void testAddStockWhenCategoryNotFoundThenThrowNotFoundException(){
+        Stock stock = createValidStock();
+        Equipment equipment = createValidEquipment();
+        User user=createValidUser();
+        when(userServiceImp.findById(1L)).thenReturn(Optional.of(user));
+        when(equipmentServiceImp.findById(1L)).thenReturn(Optional.of(equipment));
+        when(statusServiceImp.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(StatusNotFoundException.class,stockServiceImp.addStock(stock));
+    }
+
+
 
     @Test
     public void testSaveStockWhenNullStockThenThrowException() {

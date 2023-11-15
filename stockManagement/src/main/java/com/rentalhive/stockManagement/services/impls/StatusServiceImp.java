@@ -1,4 +1,4 @@
-package com.rentalhive.stockManagement.services.implementes;
+package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Status;
 import com.rentalhive.stockManagement.repositories.StatusRepository;
