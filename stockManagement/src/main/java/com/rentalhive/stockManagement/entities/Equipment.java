@@ -29,4 +29,51 @@ public class Equipment {
 
     @NotNull(message = "The category of the equipment can not be null")
     private Category category;
+
+    public Equipment(String name, Double price_per_day, User added_by, Category category) {
+        this.name = name;
+        this.price_per_day = price_per_day;
+        this.added_by = added_by;
+        this.category = category;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPrice_per_day() {
+        return price_per_day;
+    }
+
+    public void setPrice_per_day(Double price_per_day) {
+        this.price_per_day = price_per_day;
+    }
+
+    public User getAdded_by() {
+        return added_by;
+    }
+
+    public void setAdded_by(User added_by) {
+        this.added_by = added_by;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
