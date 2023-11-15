@@ -8,12 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Setter
-@Getter
+@Data
 public class Category {
 
     @Id
@@ -23,5 +21,6 @@ public class Category {
     @NotEmpty(message = "The name of category can not be empty")
     @NotNull(message = "The name of category can not be null")
     @NotBlank(message = "The name of category can not be blank")
+
     private String name;
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.rentalhive.stockManagement.entities.Demande;
 
-public interface DemandeServiceInterface {
+public interface DemandeService {
 
     public List<Demande> getAllDemandes();
 

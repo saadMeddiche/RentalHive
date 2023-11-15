@@ -19,8 +19,8 @@ public class Stock {
     @NotNull(message = "The equipment can not be null")
     private Equipment equipment;
 
-    @NotNull(message = "The category can not be null")
-    private Category category;
+    @NotNull(message = "The status can not be null")
+    private Status status;
 
     @NotNull(message = "The user that added the equipment in the stock can not be null")
     private User added_by;
