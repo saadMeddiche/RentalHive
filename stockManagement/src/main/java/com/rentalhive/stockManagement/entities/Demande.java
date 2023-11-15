@@ -11,7 +11,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -31,10 +30,10 @@ public class Demande {
 
     private Boolean accepted;
 
-    @NotNull(message = "The user that verified can not be null")
+    // Can Be Null
     private User verified_by;
 
-    @NotNull(message = "The date of verification can not be null")
+    // Can Be Null
     private LocalDateTime date_verification;
 
     @NotNull(message = "The date of verification can not be null")
