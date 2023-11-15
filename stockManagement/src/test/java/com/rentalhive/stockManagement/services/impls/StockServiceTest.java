@@ -1,4 +1,4 @@
-package com.rentalhive.stockManagement.services;
+package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.embeddables.AddressEmail;
 import com.rentalhive.stockManagement.embeddables.FullName;
