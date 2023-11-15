@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -36,37 +36,71 @@ public class DemandeServiceImpTest {
     // MockitoAnnotations.openMocks(this);
     // }
 
-    public DemandeRepository demandeRepository = mock(DemandeRepository.class);;
+    public DemandeRepository demandeRepository;
 
-    public DemandeServiceImp demandeServiceImp = new DemandeServiceImp(demandeRepository);
+    public DemandeServiceImp demandeServiceImp;
 
+    @BeforeEach
+    public void setUpRepositoryAndServiceOfDemande() {
+        demandeRepository = mock(DemandeRepository.class);
+        demandeServiceImp = new DemandeServiceImp(demandeRepository);
+    }
 
-   
-    @Test
-    public void addDemande_whenDateVerificationIsNull_thenShouldNotThrowIllegalArgument() {
+    @Nested
+    class addDemande {
 
-        User renter = new User();
+        @Test
+        public void whenDateVerificationIsNull_thenShouldNotThrowIllegalArgument() {
 
-        User verified_by = mock(User.class);
+            User renter = new User();
 
-        String description = "Hello World !!";
+            User verified_by = mock(User.class);
 
-        Boolean accepted = false;
+            String description = "Hello World !!";
 
-        LocalDateTime date_verification = getDateTime(null);
+            Boolean accepted = false;
 
-        LocalDateTime date_reservation = getDateTime("2004-01-20T12:00:00");
+            LocalDateTime date_verification = getDateTime(null);
 
-        LocalDateTime date_expiration = getDateTime("2005-01-20T12:00:00");
+            LocalDateTime date_reservation = getDateTime("2004-01-20T12:00:00");
 
-        LocalDateTime date_demande = getDateTime("2004-01-01T12:00:00");
+            LocalDateTime date_expiration = getDateTime("2005-01-20T12:00:00");
 
-        Demande demande = new Demande(renter, description, accepted, verified_by, date_verification, date_reservation,
-                date_expiration, date_demande);
+            LocalDateTime date_demande = getDateTime("2004-01-01T12:00:00");
 
-        assertDoesNotThrow(() -> {
-            demandeServiceImp.addDemande(demande);
-        });
+            Demande demande = new Demande(renter, description, accepted, verified_by, date_verification,
+                    date_reservation,
+                    date_expiration, date_demande);
+
+            assertDoesNotThrow(() -> {
+                demandeServiceImp.addDemande(demande);
+            });
+        }
+
+        public void whenDateDescriptionIsNull_thenShouldThrowIllegalArgument() {
+
+            User renter = new User();
+
+            User verified_by = mock(User.class);
+
+            String description = null;
+
+            Boolean accepted = false;
+
+            LocalDateTime date_verification = getDateTime(null);
+
+            LocalDateTime date_reservation = getDateTime("2004-01-20T12:00:00");
+
+            LocalDateTime date_expiration = getDateTime("2005-01-20T12:00:00");
+
+            LocalDateTime date_demande = getDateTime("2004-01-01T12:00:00");
+
+            Demande demande = new Demande(renter, description, accepted, verified_by, date_verification,
+                    date_reservation,
+                    date_expiration, date_demande);
+
+           
+        }
     }
 
     public LocalDateTime getDateTime(String date) {
