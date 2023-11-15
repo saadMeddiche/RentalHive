@@ -17,8 +17,7 @@ import com.rentalhive.stockManagement.embeddables.AddressEmail;
 import com.rentalhive.stockManagement.embeddables.FullName;
 import com.rentalhive.stockManagement.embeddables.Password;
 
-import lombok.Getter;
-import lombok.Setter;
+
 import lombok.Data;
 @Entity
 @Data
