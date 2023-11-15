@@ -24,7 +24,7 @@ public interface Testing {
         Stream<DynamicTest> whenAddingADemandeThatIsVerifiedFromTheBegining_thenShouldThrowValidationException();
 
         @TestFactory
-        Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowIllegalArgument();
+        Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowDateValidationException();
 
         @TestFactory
         Stream<DynamicTest> whenNonNullableAttributeAreNull_thenShouldThrowValidationException();
@@ -45,7 +45,7 @@ public interface Testing {
         Stream<DynamicTest> whenAllIsGood_thenShouldNotException();
 
         @TestFactory
-        Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowIllegalArgument();
+        Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowDateValidationException();
 
         @TestFactory
         Stream<DynamicTest> whenNonNullableAttributeAreNull_thenShouldThrowValidationException();
