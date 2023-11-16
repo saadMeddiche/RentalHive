@@ -66,7 +66,6 @@ class StockServiceTest {
 
         Stock stock = createValidStock();
         Status status = createValidStatus();
-
         when(statusServiceImp.findById(1L)).thenReturn(Optional.of(status));
         when(stockRepository.save(stock)).thenReturn(stock);
 
