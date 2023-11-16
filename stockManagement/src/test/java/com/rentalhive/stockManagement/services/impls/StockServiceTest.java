@@ -11,7 +11,6 @@ import com.rentalhive.stockManagement.repositories.StockRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -72,6 +71,7 @@ class StockServiceTest {
         status.setName("Test Category");
         return status;
     }
+
     private Equipment createValidEquipment() {
         Equipment equipment = new Equipment();
         equipment.setId(1L);
@@ -98,6 +98,7 @@ class StockServiceTest {
     @Test
     void testAddStockWhenUserNotFoundThenThrowNotFoundException(){
         Stock stock = createValidStock();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()->stockServiceImp.addStock(stock),"user does not exist");
     }
@@ -105,8 +106,8 @@ class StockServiceTest {
     @Test
     void testAddStockWhenStockAlreadyExistThenThrowAlreadyExistException(){
         Stock stock = createValidStock();
-        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
-        assertThrows(AlreadyExistsException.class, ()->stockServiceImp.addStock(stock),"stock with the same registration name already exist");
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
+        assertThrows(DoNotExistsException.class, ()->stockServiceImp.addStock(stock),"stock doesn't exist");
     }
 
     @Test
@@ -155,8 +156,74 @@ class StockServiceTest {
             }
         }
         assertThrows(ValidationException.class, () -> stockServiceImp.addStock(stock),"one of this stock fields is blank");
+    }
+
+    @Test
+    void testUpdateStockWhenValidThenSuccess() {
+
+        Stock stock = createValidStock();
+        Status status = createValidStatus();
+        Equipment equipment = createValidEquipment();
+        User user=createValidUser();
+        when(userServiceImp.findById(anyLong())).thenReturn(Optional.of(user));
+        when(statusServiceImp.findById(anyLong())).thenReturn(Optional.of(status));
+        when(equipmentServiceImp.findById(anyLong())).thenReturn(Optional.of(equipment));
+        when(stockRepository.save(stock)).thenReturn(stock);
+
+        Stock stockRes = stockServiceImp.addStock(stock);
+        assertEquals(stockRes, stock);
+    }
+
+    @Test
+    void testUpdateStockWhenUserNotFoundThenThrowNotFoundException(){
+        Stock stock = createValidStock();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
+        when(userServiceImp.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(DoNotExistsException.class, ()->stockServiceImp.updateStock(stock),"user does not exist");
+    }
+
+    @Test
+    void testUpdateStockWhenStockNotFoundThenThrowAlreadyExistException(){
+        Stock stock = createValidStock();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
+        assertThrows(AlreadyExistsException.class, ()->stockServiceImp.updateStock(stock),"stock with the same registration name already exist");
+    }
+
+    @Test
+    void testUpdateStockWhenEquipmentNotFoundThenThrowNotFoundException(){
+        Stock stock = createValidStock();
+        User user=createValidUser();
+        when(userServiceImp.findById(anyLong())).thenReturn(Optional.of(user));
+        when(equipmentServiceImp.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(DoNotExistsException.class, ()-> stockServiceImp.updateStock(stock),"the equipment does not exist");
+    }
+
+    @Test
+    void testUpdateStockWhenCategoryNotFoundThenThrowNotFoundException(){
+        Stock stock = createValidStock();
+        Equipment equipment = createValidEquipment();
+        User user=createValidUser();
+        when(userServiceImp.findById(1L)).thenReturn(Optional.of(user));
+        when(equipmentServiceImp.findById(1L)).thenReturn(Optional.of(equipment));
+        when(statusServiceImp.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(DoNotExistsException.class, ()->stockServiceImp.updateStock(stock),"category does not exist");
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestData")
+    void testUpdateStockAttributesForNull(Stock stock, String nullField) throws IllegalAccessException {
+        Field[] fields = stock.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals(nullField)) {
+                field.set(stock, null);
+            }
+        }
+        assertThrows(ValidationException.class, () -> stockServiceImp.updateStock(stock),"one of this stock fields is null");
 
     }
+
 
     private  Stream<Arguments> provideTestData() {
         Stock stock = createValidStock();
@@ -167,5 +234,7 @@ class StockServiceTest {
                 Arguments.of(stock, "equipment")
         );
     }
+
+
 
 }
