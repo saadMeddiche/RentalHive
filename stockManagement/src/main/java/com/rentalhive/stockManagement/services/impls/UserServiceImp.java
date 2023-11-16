@@ -4,6 +4,8 @@ import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.UserService;
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +15,17 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImp implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
+
+    public UserServiceImp() {
+
+    }
+
     public List<User> getAllUsers() {
         return null;
     }
+
     public Optional<User> findById(Long id) {
         return Optional.empty();
     }
@@ -31,5 +40,9 @@ public class UserServiceImp implements UserService {
 
     public void deleteUser(User user) {
 
+    }
+
+    public boolean isExists(User user) {
+        return userRepository.existsById(user.getId());
     }
 }

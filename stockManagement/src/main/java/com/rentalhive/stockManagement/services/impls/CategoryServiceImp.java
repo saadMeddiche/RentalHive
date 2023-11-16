@@ -15,9 +15,15 @@ import java.util.Optional;
 public class CategoryServiceImp implements CategoryService {
 
     private CategoryRepository categoryRepository;
+
+    public CategoryServiceImp() {
+
+    }
+
     public List<Category> getAllCategorys() {
         return null;
     }
+
     public Optional<Category> findById(Long id) {
         return Optional.empty();
     }
@@ -32,5 +38,9 @@ public class CategoryServiceImp implements CategoryService {
 
     public void deleteCategory(Category category) {
 
+    }
+
+    public boolean isExists(Category category) {
+        return categoryRepository.existsById(category.getId());
     }
 }

@@ -21,26 +21,40 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
     @Autowired
     private EquipmentRepository equipmentRepository;
 
+    public EquipmentServiceImp(EquipmentRepository equipmentRepository) {
+        super(equipmentRepository);
+    }
+
     public List<Equipment> getAllEquipments() {
         return equipmentRepository.findAll();
     }
 
-    public Optional<Equipment> findById(Long id) {
+    public Optional<Equipment> findById(Equipment equipment) {
 
-        checkIfIdIsNull(id);
+        checkIfIdOfEquipmentIsNull(equipment);
 
-        return equipmentRepository.findById(id);
+        return equipmentRepository.findById(equipment.getId());
     }
 
     public Equipment addEquipment(Equipment equipment) {
-        return null;
+
+        validateEquipmentOnAdding(equipment);
+
+        return equipmentRepository.save(equipment);
     }
 
     public Equipment updateEquipment(Equipment equipment) {
-        return null;
+
+        validateEquipmentOnUpdating(equipment);
+
+        return equipmentRepository.save(equipment);
     }
 
     public void deleteEquipment(Equipment equipment) {
+
+        validateEquipmentOnDeleting(equipment);
+
+        equipmentRepository.delete(equipment);
 
     }
 }
