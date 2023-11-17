@@ -13,6 +13,4 @@ public class EmptyListException extends RuntimeException {
         return error;
     }
 
-    
-
 }

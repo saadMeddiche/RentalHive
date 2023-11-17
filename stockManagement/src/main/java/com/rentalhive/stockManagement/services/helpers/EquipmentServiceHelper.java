@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
+import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
@@ -46,7 +47,7 @@ public class EquipmentServiceHelper extends ServiceHelper {
     };
 
     protected void validationAfterGettingAllEquipments(List<Equipment> equipments) {
-
+        // throw Exception If The Equipments Is Empty
         throwExceptionIfEquipmentsIsEmpty(equipments);
     }
 

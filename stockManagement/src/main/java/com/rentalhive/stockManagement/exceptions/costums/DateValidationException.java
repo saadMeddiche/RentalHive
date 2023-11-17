@@ -13,6 +13,4 @@ public class DateValidationException extends RuntimeException {
         return error;
     }
 
-
-
 }
