@@ -1,15 +1,18 @@
 package com.rentalhive.stockManagement.exceptions.costums;
 
-public class DoNotExistsException extends RuntimeException {
+public class EmptyListException extends RuntimeException {
 
     private final String error;
 
-    public DoNotExistsException(String error) {
+
+    public EmptyListException(String error) {
         this.error = error;
     }
 
     public String getError() {
         return error;
     }
+
+    
 
 }
