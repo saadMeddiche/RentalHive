@@ -33,4 +33,8 @@ public class CategoryServiceImp implements CategoryService {
     public void deleteCategory(Category category) {
 
     }
+
+    public boolean find(Category category) {
+        return false;
+    }
 }

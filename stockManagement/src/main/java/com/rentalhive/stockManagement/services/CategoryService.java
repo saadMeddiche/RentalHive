@@ -8,6 +8,8 @@ public interface CategoryService {
 
     public List<Category> getAllCategorys();
 
+    public boolean find(Category category);
+
     public Category addCategory(Category category);
 
     public Category updateCategory(Category category);
