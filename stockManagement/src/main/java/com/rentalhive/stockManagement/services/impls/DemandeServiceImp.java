@@ -41,7 +41,7 @@ public class DemandeServiceImp extends DemandeServiceHelper implements DemandeSe
     public void deleteDemand(Demande demande) {
            validateDemandeOnDeleting(demande);
 
-           return demandeRepository.delete(demande);
+        demandeRepository.delete(demande);
     }
 
 }
