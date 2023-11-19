@@ -4,18 +4,17 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.rentalhive.stockManagement.exceptions.costums.NotMatchedException;
+import com.rentalhive.stockManagement.exceptions.costums.DateValidationException;
 import com.rentalhive.stockManagement.exceptions.interfaces.ExceptionHandler;
 
-public class NotMatchedExceptionHandler implements ExceptionHandler {
+public class DateValidationExceptionHandler implements ExceptionHandler {
 
     @Override
     public List<String> handleException(Exception exception) {
 
-        NotMatchedException notMatchedException = (NotMatchedException) exception;
+        DateValidationException dateValidationExceptionHandler = (DateValidationException) exception;
 
-        return List.of(notMatchedException.getError());
-
+        return List.of(dateValidationExceptionHandler.getError());
     }
 
     @Override

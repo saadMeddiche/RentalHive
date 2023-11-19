@@ -48,8 +48,8 @@ class EquipementServiceImplTest {
         Category category= new Category(1L,"User");
         Equipment equipment=new Equipment("name",50.30,user,category);
 
-        when(categoryService.find(category)).thenReturn(false);
-        when(userService.find(user)).thenReturn(true);
+        when(categoryService.find(category)).thenThrow(UnknownCategoryException.class);
+        when(userService.find(user)).thenReturn(user);
         doNothing().when(equipmentRepository).save(equipment);
 
        assertThrows(UnknownCategoryException.class, () -> equipmentService.addEquipment(equipment));
@@ -62,8 +62,8 @@ class EquipementServiceImplTest {
         Category category= new Category(1L,"User");
         Equipment equipment=new Equipment("name",50.30,user,category);
 
-        when(categoryService.find(category)).thenReturn(true);
-        when(userService.find(user)).thenReturn(false);
+        when(categoryService.find(category)).thenReturn(category);
+        when(userService.find(user)).thenThrow(UnknownUserException.class);
         doNothing().when(equipmentRepository).save(equipment);
 
         assertThrows(UnknownUserException.class, () -> equipmentService.addEquipment(equipment));

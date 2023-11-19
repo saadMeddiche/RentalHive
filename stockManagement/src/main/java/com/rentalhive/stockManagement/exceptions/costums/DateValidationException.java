@@ -1,10 +1,11 @@
 package com.rentalhive.stockManagement.exceptions.costums;
 
-public class DoNotExistsException extends RuntimeException {
+public class DateValidationException extends RuntimeException {
 
     private final String error;
 
-    public DoNotExistsException(String error) {
+
+    public DateValidationException(String error) {
         this.error = error;
     }
 

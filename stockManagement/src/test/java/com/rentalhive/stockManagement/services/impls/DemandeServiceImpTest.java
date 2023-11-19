@@ -1,18 +1,10 @@
 package com.rentalhive.stockManagement.services.impls;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Nested;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
@@ -23,11 +15,13 @@ import java.util.stream.Stream;
 
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.User;
+import com.rentalhive.stockManagement.exceptions.costums.DateValidationException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.repositories.DemandeRepository;
+import com.rentalhive.stockManagement.services.Testing;
 import com.rentalhive.stockManagement.testHelpers.DynamicTestHelper;
 
-public class DemandeServiceImpTest extends DynamicTestHelper {
+public class DemandeServiceImpTest extends DynamicTestHelper implements Testing {
 
     // @Mock
     // DemandeRepository demandeRepository;
@@ -61,7 +55,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
     LocalDateTime date_demande;
 
     @Nested
-    class addDemande {
+    class addDemande implements Testing.add {
 
         @BeforeEach
         public void setUpRepositoryAndServiceOfDemande() {
@@ -126,10 +120,10 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
          * @return a stream of dynamic tests
          */
         @TestFactory
-        public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowIllegalArgument() {
+        public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowDateValidationException() {
             return DynamicTestStreamForAssertThrows(createTestsDemandsForDatesValidation(),
                     demandeServiceImp::addDemande,
-                    ValidationException.class);
+                    DateValidationException.class);
         }
 
         /**
@@ -173,7 +167,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
         /**
          * Generates a list of Demande objects for dates validation testing.
          *
-         * @return         	A list of Demande objects
+         * @return A list of Demande objects
          */
         public List<Demande> createTestsDemandsForDatesValidation() {
 
@@ -202,7 +196,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
         /**
          * Generates a list of test Demande objects for null validation.
          *
-         * @return  a list of Demande objects for null validation
+         * @return a list of Demande objects for null validation
          */
         public List<Demande> createTestsDemandsForNullValidation() {
 
@@ -241,7 +235,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
     }
 
     @Nested
-    class updateDemande {
+    class updateDemande implements Testing.update {
 
         @BeforeEach
         public void setUpRepositoryAndServiceOfDemande() {
@@ -269,10 +263,10 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
          * @return a stream of dynamic tests
          */
         @TestFactory
-        public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowIllegalArgument() {
+        public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowDateValidationException() {
             return DynamicTestStreamForAssertThrows(createTestsDemandsForDatesValidation(),
                     demandeServiceImp::updateDemand,
-                    ValidationException.class);
+                    DateValidationException.class);
         }
 
         /**
@@ -316,7 +310,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
         /**
          * Generates a list of test demands for dates validation.
          *
-         * @return         	a list of Demande objects
+         * @return a list of Demande objects
          */
         public List<Demande> createTestsDemandsForDatesValidation() {
 
@@ -335,7 +329,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper {
         /**
          * Generates a list of test demands for null validation.
          *
-         * @return  A list of Demande objects.
+         * @return A list of Demande objects.
          */
         public List<Demande> createTestsDemandsForNullValidation() {
 

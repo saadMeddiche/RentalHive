@@ -13,4 +13,5 @@ public class ValidationException extends RuntimeException {
     public List<String> getErrors() {
         return errors;
     }
+
 }

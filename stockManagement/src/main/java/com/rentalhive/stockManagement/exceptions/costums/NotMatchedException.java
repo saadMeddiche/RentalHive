@@ -11,4 +11,5 @@ public class NotMatchedException extends RuntimeException {
     public String getError() {
         return error;
     }
+
 }

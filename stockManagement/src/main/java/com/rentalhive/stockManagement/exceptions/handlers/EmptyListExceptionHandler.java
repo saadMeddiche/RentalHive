@@ -5,27 +5,28 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
-
+import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.interfaces.ExceptionHandler;
 
-public class DoNotExistsExceptionHandler implements ExceptionHandler {
+public class EmptyListExceptionHandler implements ExceptionHandler {
 
     @Override
     public List<String> handleException(Exception exception) {
 
-        DoNotExistsException doNotExistsExceptionHandler = (DoNotExistsException) exception;
+        EmptyListException emptyListException = (EmptyListException) exception;
 
-        return List.of(doNotExistsExceptionHandler.getError());
+        return List.of(emptyListException.getError());
 
     }
 
     @Override
     public HttpStatus getStatus() {
-        return HttpStatus.NOT_FOUND;
+
+        return HttpStatus.NO_CONTENT;
     }
 
     @Override
     public String getMessage() {
-        return "This Record Do Not Exist";
+        return "The List Is Empty";
     }
 }

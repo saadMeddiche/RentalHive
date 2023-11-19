@@ -9,7 +9,7 @@ public interface UserService {
 
     public List<User> getAllUsers();
 
-    public boolean find(User user);
+    public User find(User user);
 
     public User addUser(User user);
 
