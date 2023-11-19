@@ -86,9 +86,10 @@ class StockServiceTest {
         Status status = createValidStatus();
         Equipment equipment = createValidEquipment();
         User user=createValidUser();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.of(user));
         when(statusServiceImp.findById(anyLong())).thenReturn(Optional.of(status));
-        when(equipmentServiceImp.findById(anyLong())).thenReturn(Optional.of(equipment));
+        when(equipmentServiceImp.findById(equipment)).thenReturn(Optional.empty());
         when(stockRepository.save(stock)).thenReturn(stock);
 
         Stock stockRes = stockServiceImp.addStock(stock);
@@ -98,7 +99,7 @@ class StockServiceTest {
     @Test
     void testAddStockWhenUserNotFoundThenThrowNotFoundException(){
         Stock stock = createValidStock();
-        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()->stockServiceImp.addStock(stock),"user does not exist");
     }
@@ -106,7 +107,7 @@ class StockServiceTest {
     @Test
     void testAddStockWhenStockAlreadyExistThenThrowAlreadyExistException(){
         Stock stock = createValidStock();
-        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
         assertThrows(DoNotExistsException.class, ()->stockServiceImp.addStock(stock),"stock doesn't exist");
     }
 
@@ -114,8 +115,10 @@ class StockServiceTest {
     void testAddStockWhenEquipmentNotFoundThenThrowNotFoundException(){
         Stock stock = createValidStock();
         User user=createValidUser();
+        Equipment equipment = createValidEquipment();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.of(user));
-        when(equipmentServiceImp.findById(anyLong())).thenReturn(Optional.empty());
+        when(equipmentServiceImp.findById(equipment)).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()-> stockServiceImp.addStock(stock),"the equipment does not exist");
     }
 
@@ -125,7 +128,7 @@ class StockServiceTest {
         Equipment equipment = createValidEquipment();
         User user=createValidUser();
         when(userServiceImp.findById(1L)).thenReturn(Optional.of(user));
-        when(equipmentServiceImp.findById(1L)).thenReturn(Optional.of(equipment));
+        when(equipmentServiceImp.findById(equipment)).thenReturn(Optional.of(equipment));
         when(statusServiceImp.findById(1L)).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()->stockServiceImp.addStock(stock),"category does not exist");
     }
@@ -165,9 +168,10 @@ class StockServiceTest {
         Status status = createValidStatus();
         Equipment equipment = createValidEquipment();
         User user=createValidUser();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.of(user));
         when(statusServiceImp.findById(anyLong())).thenReturn(Optional.of(status));
-        when(equipmentServiceImp.findById(anyLong())).thenReturn(Optional.of(equipment));
+        when(equipmentServiceImp.findById(equipment)).thenReturn(Optional.of(equipment));
         when(stockRepository.save(stock)).thenReturn(stock);
 
         Stock stockRes = stockServiceImp.addStock(stock);
@@ -177,7 +181,7 @@ class StockServiceTest {
     @Test
     void testUpdateStockWhenUserNotFoundThenThrowNotFoundException(){
         Stock stock = createValidStock();
-        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()->stockServiceImp.updateStock(stock),"user does not exist");
     }
@@ -185,7 +189,7 @@ class StockServiceTest {
     @Test
     void testUpdateStockWhenStockNotFoundThenThrowAlreadyExistException(){
         Stock stock = createValidStock();
-        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.empty());
         assertThrows(AlreadyExistsException.class, ()->stockServiceImp.updateStock(stock),"stock with the same registration name already exist");
     }
 
@@ -193,8 +197,10 @@ class StockServiceTest {
     void testUpdateStockWhenEquipmentNotFoundThenThrowNotFoundException(){
         Stock stock = createValidStock();
         User user=createValidUser();
+        Equipment equipment=createValidEquipment();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
         when(userServiceImp.findById(anyLong())).thenReturn(Optional.of(user));
-        when(equipmentServiceImp.findById(anyLong())).thenReturn(Optional.empty());
+        when(equipmentServiceImp.findById(equipment)).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()-> stockServiceImp.updateStock(stock),"the equipment does not exist");
     }
 
@@ -203,8 +209,9 @@ class StockServiceTest {
         Stock stock = createValidStock();
         Equipment equipment = createValidEquipment();
         User user=createValidUser();
+        when(stockRepository.findByRegistrationNumber(anyString())).thenReturn(Optional.of(stock));
         when(userServiceImp.findById(1L)).thenReturn(Optional.of(user));
-        when(equipmentServiceImp.findById(1L)).thenReturn(Optional.of(equipment));
+        when(equipmentServiceImp.findById(equipment)).thenReturn(Optional.of(equipment));
         when(statusServiceImp.findById(1L)).thenReturn(Optional.empty());
         assertThrows(DoNotExistsException.class, ()->stockServiceImp.updateStock(stock),"category does not exist");
     }

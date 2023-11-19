@@ -1,11 +1,9 @@
 package com.rentalhive.stockManagement.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,6 +18,7 @@ public class Demande {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
     @NotNull(message = "The renter can not be null")
     private User renter;
 
@@ -30,6 +29,7 @@ public class Demande {
 
     private Boolean accepted;
 
+    @ManyToOne
     // Can Be Null
     private User verified_by;
 
@@ -44,6 +44,9 @@ public class Demande {
 
     @NotNull(message = "The date of demande can not be null")
     private LocalDateTime date_demande;
+
+    @OneToMany
+    private List<Stock> stocks;
 
     public Demande() {
 

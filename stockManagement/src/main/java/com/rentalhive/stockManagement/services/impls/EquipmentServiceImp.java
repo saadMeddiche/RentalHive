@@ -1,6 +1,7 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Equipment;
+import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
@@ -31,7 +32,7 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
 
     public Optional<Equipment> findById(Equipment equipment) {
 
-        checkIfIdOfEquipmentIsNull(equipment);
+        throwExceptionIfIdOfEquipmentIsNull(equipment);
 
         return equipmentRepository.findById(equipment.getId());
     }
@@ -56,5 +57,19 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
 
         equipmentRepository.delete(equipment);
 
+    }
+
+    public boolean EquipmentQuantityExist(Equipment equipment){
+
+        return false;
+    }
+    public boolean isExist(Equipment equipment){
+
+        return false;
+    }
+
+    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity){
+
+        return null;
     }
 }

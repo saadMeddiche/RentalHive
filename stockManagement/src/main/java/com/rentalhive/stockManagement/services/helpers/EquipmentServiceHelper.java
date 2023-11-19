@@ -22,7 +22,7 @@ public class EquipmentServiceHelper extends ServiceHelper {
     // Check If The ID Is Null
     Predicate<Equipment> isIdOfEquipmentNull = equipment -> equipment.getId() == null;
 
-    // Check If there is an equipment with the same name and category
+    // Check If there is equipment with the same name and category
     Predicate<Equipment> isEquipmentAlreadyExistByNameAndCategory = equipment -> {
         return equipmentRepository.existsByNameAndCategory(equipment.getName(), equipment.getCategory());
     };
@@ -44,13 +44,13 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     protected void validateEquipmentOnAdding(Equipment equipment) {
 
-        // Inputes Validation
+        // Inputs Validation
         validateObject(equipment);
 
         // throwException If The ID Is Null
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
-        // throwException If there is an equipment with the same name and category
+        // throwException If there is equipment with the same name and category
         throwExceptionIfEquipmentAlreadyExistByNameAndCategory(equipment);
 
         // throwException If The User exist in the database (user table)
@@ -62,7 +62,7 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     protected void validateEquipmentOnUpdating(Equipment equipment) {
 
-        // Inputes Validation
+        // Inputs Validation
         validateObject(equipment);
 
         // throwException If The ID Is Null
