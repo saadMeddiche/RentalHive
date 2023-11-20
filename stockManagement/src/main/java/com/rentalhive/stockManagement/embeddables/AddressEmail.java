@@ -6,12 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Embeddable
-@Getter
-@Setter
 public class AddressEmail {
 
     @NotEmpty(message = "The address email can not be empty")
@@ -25,6 +20,21 @@ public class AddressEmail {
 
     public AddressEmail(String addressEmail) {
         this.addressEmail = addressEmail;
+    }
+
+    public String getAddressEmail() {
+        return this.addressEmail;
+    }
+
+    public void setAddressEmail(String addressEmail) {
+        this.addressEmail = addressEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " addressEmail='" + getAddressEmail() + "'" +
+                "}";
     }
 
 }
