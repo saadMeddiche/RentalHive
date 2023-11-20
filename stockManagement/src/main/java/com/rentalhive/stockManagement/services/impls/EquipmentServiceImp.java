@@ -70,5 +70,9 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
 
     }
 
+    public Optional<Equipment> findById(long id){
+        return equipmentRepository.findById(id);
+    }
+
 
 }
