@@ -40,6 +40,10 @@ public class CategoryServiceImp implements CategoryService {
 
     }
 
+
+    public Category find(Category category) {
+        return null;
+    }
     public boolean isExists(Category category) {
         return categoryRepository.existsById(category.getId());
     }

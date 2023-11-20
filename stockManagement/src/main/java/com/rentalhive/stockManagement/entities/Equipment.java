@@ -1,10 +1,14 @@
 package com.rentalhive.stockManagement.entities;
 
+
+import javax.persistence.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.Valid;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -26,12 +30,22 @@ public class Equipment {
     private Double price_per_day;
 
     @NotNull(message = "The user that added the equipment can not be null")
+    @ManyToOne
     @Valid
     private User added_by;
 
     @NotNull(message = "The category of the equipment can not be null")
     @Valid
+    @ManyToOne
     private Category category;
+
+
+    public Equipment(String name, Double price_per_day, User added_by, Category category) {
+        this.name = name;
+        this.price_per_day = price_per_day;
+        this.added_by = added_by;
+        this.category = category;
+    }
 
     public Equipment() {
     }
@@ -46,6 +60,7 @@ public class Equipment {
 
     public Long getId() {
         return this.id;
+
     }
 
     public void setId(Long id) {
