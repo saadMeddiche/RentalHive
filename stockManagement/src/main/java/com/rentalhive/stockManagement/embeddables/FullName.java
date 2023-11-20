@@ -6,12 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Embeddable
-@Getter
-@Setter
 public class FullName {
 
     @NotEmpty(message = "The first name can not be empty")
@@ -41,6 +36,30 @@ public class FullName {
     public FullName(String firstName, String middleName, String lastName) {
         this.firstName = firstName;
         this.middleName = middleName;
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return this.middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
