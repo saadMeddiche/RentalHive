@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.rentalhive.stockManagement.DynamicTestHelper;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.exceptions.costums.DateValidationException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.repositories.DemandeRepository;
 import com.rentalhive.stockManagement.services.Testing;
-import com.rentalhive.stockManagement.testHelpers.DynamicTestHelper;
 
 public class DemandeServiceImpTest extends DynamicTestHelper implements Testing {
 

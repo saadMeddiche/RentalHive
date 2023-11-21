@@ -1,13 +1,14 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Equipment;
-import com.rentalhive.stockManagement.entities.Stock;
-import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
+import com.rentalhive.stockManagement.repositories.CategoryRepository;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
+import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
-import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
 import lombok.AllArgsConstructor;
+
+import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +17,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-// @AllArgsConstructor
+@AllArgsConstructor
+
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
     @Autowired
     private EquipmentRepository equipmentRepository;
+    @Autowired
+    private UserServiceImp userService;
+    @Autowired
+    private CategoryServiceImp categoryService;
 
     public EquipmentServiceImp(EquipmentRepository equipmentRepository) {
         super(equipmentRepository);
     }
 
     public List<Equipment> getAllEquipments() {
-        return equipmentRepository.findAll();
+
+        List<Equipment> equipments = equipmentRepository.findAll();
+
+        validationAfterGettingAllEquipments(equipments);
+
+        return equipments;
     }
 
     public Optional<Equipment> findById(Equipment equipment) {
@@ -59,17 +70,9 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
 
     }
 
-    public boolean EquipmentQuantityExist(Equipment equipment){
-
-        return false;
-    }
-    public boolean isExist(Equipment equipment){
-
-        return false;
+    public Optional<Equipment> findById(long id){
+        return equipmentRepository.findById(id);
     }
 
-    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity){
 
-        return null;
-    }
 }

@@ -11,4 +11,6 @@ public class AlreadyExistsException extends RuntimeException {
     public String getError() {
         return error;
     }
+
+
 }

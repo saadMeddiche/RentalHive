@@ -1,5 +1,6 @@
 package com.rentalhive.stockManagement.services.impls;
 
+import com.rentalhive.stockManagement.entities.Category;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.UserService;
@@ -42,6 +43,9 @@ public class UserServiceImp implements UserService {
 
     }
 
+    public User find(User user) {
+        return null;
+    }
     public boolean isExists(User user) {
         return userRepository.existsById(user.getId());
     }

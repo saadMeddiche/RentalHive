@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
+import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
@@ -22,7 +23,10 @@ public class EquipmentServiceHelper extends ServiceHelper {
     // Check If The ID Is Null
     Predicate<Equipment> isIdOfEquipmentNull = equipment -> equipment.getId() == null;
 
-    // Check If there is equipment with the same name and category
+    // Check If The Equipments Is Empty
+    Predicate<List<Equipment>> isEquipmentsEmpty = list -> list.isEmpty();
+
+    // Check If there is an equipment with the same name and category
     Predicate<Equipment> isEquipmentAlreadyExistByNameAndCategory = equipment -> {
         return equipmentRepository.existsByNameAndCategory(equipment.getName(), equipment.getCategory());
     };
@@ -41,6 +45,11 @@ public class EquipmentServiceHelper extends ServiceHelper {
     Predicate<Equipment> isEquipmentExists = equipment -> {
         return equipmentRepository.existsById(equipment.getId());
     };
+
+    protected void validationAfterGettingAllEquipments(List<Equipment> equipments) {
+        // throw Exception If The Equipments Is Empty
+        throwExceptionIfEquipmentsIsEmpty(equipments);
+    }
 
     protected void validateEquipmentOnAdding(Equipment equipment) {
 
@@ -104,7 +113,6 @@ public class EquipmentServiceHelper extends ServiceHelper {
     }
 
     protected void throwExceptionIfTheCategoryDoNotExist(Equipment equipment) {
-
         // throwException If The Category exist in the database (category table)
         if (isCategoryDoNotExist.test(equipment)) {
             throw new DoNotExistsException("The category does not exist");
@@ -124,6 +132,13 @@ public class EquipmentServiceHelper extends ServiceHelper {
             throw new ValidationException(List.of("The ID of equipment can not be null"));
         }
 
+    }
+
+    protected void throwExceptionIfEquipmentsIsEmpty(List<Equipment> equipments) {
+        // throwException If The List Of Equipments Is Empty
+        if (isEquipmentsEmpty.test(equipments)) {
+            throw new EmptyListException("There are no Equipments");
+        }
     }
 
 }

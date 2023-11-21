@@ -4,6 +4,7 @@ public class DateValidationException extends RuntimeException {
 
     private final String error;
 
+
     public DateValidationException(String error) {
         this.error = error;
     }

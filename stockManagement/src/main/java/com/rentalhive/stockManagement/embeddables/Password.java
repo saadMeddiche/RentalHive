@@ -8,14 +8,9 @@ import javax.validation.constraints.Size;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Embeddable;
 
 @Embeddable
-@Setter
-@Getter
 public class Password {
 
     @NotEmpty(message = "The password can not be empty")
@@ -33,6 +28,14 @@ public class Password {
         this.hashed_password = hashPassword(non_hashed_password);
     }
 
+    public String getHashed_password() {
+        return this.hashed_password;
+    }
+
+    public void setHashed_password(String hashed_password) {
+        this.hashed_password = hashed_password;
+    }
+
     public boolean isHashedPasswordEqualsNonHashedPassword(String non_hashed_password) {
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -47,5 +50,12 @@ public class Password {
         String hashed_password = bCryptPasswordEncoder.encode(non_hashed_password);
 
         return hashed_password;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " hashed_password='" + getHashed_password() + "'" +
+                "}";
     }
 }

@@ -17,10 +17,7 @@ import com.rentalhive.stockManagement.embeddables.AddressEmail;
 import com.rentalhive.stockManagement.embeddables.FullName;
 import com.rentalhive.stockManagement.embeddables.Password;
 
-
-import lombok.Data;
 @Entity
-@Data
 public class User {
 
     @Id
@@ -47,5 +44,87 @@ public class User {
 
     @NotNull(message = "The date of creation of account can npt be null")
     private LocalDateTime date_creation_account;
+
+/*<<<<<<< HEAD
+    public User(){};
+    public User(FullName full_name, String user_name, AddressEmail email, Password password, LocalDateTime date_creation_account) {
+        this.full_name = full_name;
+        this.user_name = user_name;
+        this.email = email;
+        this.password = password;
+=======*/
+    public User() {
+    }
+
+    public User(String firstName, String middleName, String lastName, String user_name, String email,
+            String password,
+            LocalDateTime date_creation_account) {
+
+        this.full_name = new FullName(firstName, middleName, lastName);
+        this.user_name = user_name;
+        this.email = new AddressEmail(email);
+        this.password = new Password(password);
+        this.date_creation_account = date_creation_account;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public FullName getFull_name() {
+        return this.full_name;
+    }
+
+    public void setFull_name(FullName full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getUser_name() {
+        return this.user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public AddressEmail getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(AddressEmail email) {
+        this.email = email;
+    }
+
+    public Password getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(Password password) {
+        this.password = password;
+    }
+
+    public LocalDateTime getDate_creation_account() {
+        return this.date_creation_account;
+    }
+
+    public void setDate_creation_account(LocalDateTime date_creation_account) {
+        this.date_creation_account = date_creation_account;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", full_name='" + getFull_name() + "'" +
+                ", user_name='" + getUser_name() + "'" +
+                ", email='" + getEmail() + "'" +
+                ", password='" + getPassword() + "'" +
+                ", date_creation_account='" + getDate_creation_account() + "'" +
+                "}";
+    }
 
 }
