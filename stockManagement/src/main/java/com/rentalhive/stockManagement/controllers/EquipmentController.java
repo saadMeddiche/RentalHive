@@ -2,8 +2,11 @@ package com.rentalhive.stockManagement.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,14 +23,25 @@ import com.rentalhive.stockManagement.services.EquipmentService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 @RequestMapping("/api")
+@Component
+
 public class EquipmentController extends ControllerHelper {
 
     private EquipmentService equipmentService;
 
+    @Autowired
+    public void setService(@Qualifier("equipmentServiceImp") EquipmentService equipmentService) {
+        this.equipmentService = equipmentService;
+    }
+
     @GetMapping("/equipments")
     public ResponseEntity<?> getAllEquipments() {
+
+        if (equipmentService == null) {
+            return new ResponseEntity<>(new String("sssssss"), HttpStatus.OK);
+        }
 
         try {
 

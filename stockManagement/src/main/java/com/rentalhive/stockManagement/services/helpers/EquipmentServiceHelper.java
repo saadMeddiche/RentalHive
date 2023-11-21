@@ -3,6 +3,10 @@ package com.rentalhive.stockManagement.services.helpers;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
@@ -14,9 +18,16 @@ import com.rentalhive.stockManagement.services.impls.UserServiceImp;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component
+
 public class EquipmentServiceHelper extends ServiceHelper {
 
     EquipmentRepository equipmentRepository;
+
+    @Autowired
+    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
+        this.equipmentRepository = equipmentRepository;
+    }
 
     // Check If The ID Is Null
     Predicate<Equipment> isIdOfEquipmentNull = equipment -> equipment.getId() == null;
