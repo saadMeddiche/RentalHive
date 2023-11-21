@@ -2,10 +2,8 @@ package com.rentalhive.stockManagement.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +17,13 @@ import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
 import com.rentalhive.stockManagement.services.EquipmentService;
 
-@CrossOrigin(origins = "http://localhost:3306")
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class EquipmentController extends ControllerHelper {
 
-    @Autowired
     private EquipmentService equipmentService;
 
     @GetMapping("/equipments")
@@ -37,8 +36,11 @@ public class EquipmentController extends ControllerHelper {
             return new ResponseEntity<>(equipments, HttpStatus.OK);
 
         } catch (Exception e) {
+            System.out.println(e.getClass());
             return getResponseEntityDependingOnException(e);
         }
+
+        // return new ResponseEntity<>(new Equipment(), HttpStatus.OK);
     }
 
     @PostMapping("/equipments")

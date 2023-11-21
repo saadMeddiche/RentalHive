@@ -11,14 +11,12 @@ import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.impls.CategoryServiceImp;
 import com.rentalhive.stockManagement.services.impls.UserServiceImp;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class EquipmentServiceHelper extends ServiceHelper {
 
     EquipmentRepository equipmentRepository;
-
-    public EquipmentServiceHelper(EquipmentRepository equipmentRepository) {
-        this.equipmentRepository = equipmentRepository;
-    }
 
     // Check If The ID Is Null
     Predicate<Equipment> isIdOfEquipmentNull = equipment -> equipment.getId() == null;

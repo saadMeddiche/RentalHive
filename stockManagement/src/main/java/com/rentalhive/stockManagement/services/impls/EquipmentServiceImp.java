@@ -5,22 +5,18 @@ import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
 import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-// @AllArgsConstructor
+@RequiredArgsConstructor
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
-    @Autowired
     private EquipmentRepository equipmentRepository;
-
-    public EquipmentServiceImp(EquipmentRepository equipmentRepository) {
-        super(equipmentRepository);
-    }
 
     public List<Equipment> getAllEquipments() {
 

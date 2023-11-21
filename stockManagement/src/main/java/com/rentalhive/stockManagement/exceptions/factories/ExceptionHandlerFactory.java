@@ -3,11 +3,13 @@ package com.rentalhive.stockManagement.exceptions.factories;
 import com.rentalhive.stockManagement.exceptions.costums.AlreadyExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.DateValidationException;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
+import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.costums.NotMatchedException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.exceptions.handlers.AlreadyExistsExceptionHandler;
 import com.rentalhive.stockManagement.exceptions.handlers.DateValidationExceptionHandler;
 import com.rentalhive.stockManagement.exceptions.handlers.DoNotExistsExceptionHandler;
+import com.rentalhive.stockManagement.exceptions.handlers.EmptyListExceptionHandler;
 import com.rentalhive.stockManagement.exceptions.handlers.NotMatchedExceptionHandler;
 import com.rentalhive.stockManagement.exceptions.handlers.ValidationExceptionHandler;
 import com.rentalhive.stockManagement.exceptions.interfaces.ExceptionHandler;
@@ -34,6 +36,10 @@ public class ExceptionHandlerFactory {
 
         if (exception instanceof DateValidationException) {
             return new DateValidationExceptionHandler();
+        }
+
+        if (exception instanceof EmptyListException) {
+            return new EmptyListExceptionHandler();
         }
 
         return null;
