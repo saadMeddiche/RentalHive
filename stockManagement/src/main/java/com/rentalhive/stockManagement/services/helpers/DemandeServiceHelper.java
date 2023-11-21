@@ -9,6 +9,7 @@ import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.DemandeRepository;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
+import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.impls.EquipmentServiceImp;
 import com.rentalhive.stockManagement.services.impls.UserServiceImp;
 

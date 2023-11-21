@@ -13,15 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public UserServiceImp() {
-
-    }
 
     public List<User> getAllUsers() {
         return null;
@@ -41,6 +37,11 @@ public class UserServiceImp implements UserService {
 
     public void deleteUser(User user) {
 
+    }
+
+    @Override
+    public Optional<User> findById(long id) {
+        return Optional.empty();
     }
 
     public User find(User user) {
