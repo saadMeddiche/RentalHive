@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,15 +21,16 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
     @Autowired
     private EquipmentRepository equipmentRepository;
-/*    @Autowired
-    private UserServiceImp userService;
+
     @Autowired
-    private CategoryServiceImp categoryService;*/
+    private UserServiceImp userService;
+
+    @Autowired
+    private CategoryServiceImp categoryService;
 
     public EquipmentServiceImp(EquipmentRepository equipmentRepository) {
         super(equipmentRepository);
@@ -76,18 +79,18 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
     }
 
 
-    public boolean EquipmentQuantityExist(Equipment equipment){
+    public Integer countAvailableStocksForEquipment(Equipment equipment){
 
-        return false;
+        return equipmentRepository.CountAvailableStocksForEquipment(equipment.getId());
     }
     public boolean isExist(Equipment equipment){
 
-        return false;
+        return equipmentRepository.existsById(equipment.getId());
     }
 
     public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity){
-
-        return null;
+        Pageable pageable = PageRequest.of(0, quantity);
+        return equipmentRepository.findAvailableStocksForEquipment(equipment.getId(), pageable);
     }
 
 }
