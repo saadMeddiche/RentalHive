@@ -4,6 +4,8 @@ import com.rentalhive.stockManagement.entities.User;
 
 import java.util.List;
 
+import java.util.Optional;
+
 public interface UserService {
 
     public List<User> getAllUsers();
@@ -13,4 +15,6 @@ public interface UserService {
     public User updateUser(User user);
 
     public void deleteUser(User user);
+
+    public User findById(Long id);
 }

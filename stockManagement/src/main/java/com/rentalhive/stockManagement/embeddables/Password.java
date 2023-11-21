@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+// import org.mindrot.jbcrypt.BCrypt;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Embeddable;
@@ -38,13 +39,14 @@ public class Password {
         this.hashed_password = hashed_password;
     }
 
-    // public boolean isHashedPasswordEqualsNonHashedPassword(String
-    // non_hashed_password) {
+    public boolean isHashedPasswordEqualsNonHashedPassword(String non_hashed_password) {
 
-    // BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        // BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    // return bCryptPasswordEncoder.matches(hashed_password, non_hashed_password);
-    // }
+        // return bCryptPasswordEncoder.matches(hashed_password, non_hashed_password);
+
+        return true;
+    }
 
     // public String hashPassword(String non_hashed_password) {
 
@@ -53,6 +55,10 @@ public class Password {
     // String hashed_password = bCryptPasswordEncoder.encode(non_hashed_password);
 
     // return hashed_password;
+    // }
+
+    // public static String hashPassword(String plainPassword) {
+    // return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
     // }
 
     @Override

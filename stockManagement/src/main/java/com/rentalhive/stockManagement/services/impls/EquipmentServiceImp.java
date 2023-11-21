@@ -5,8 +5,6 @@ import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
 import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 @Component
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 

@@ -20,13 +20,9 @@ import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
 import com.rentalhive.stockManagement.services.EquipmentService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
-// @RequiredArgsConstructor
 @RequestMapping("/api")
 @Component
-
 public class EquipmentController extends ControllerHelper {
 
     private EquipmentService equipmentService;
@@ -39,10 +35,6 @@ public class EquipmentController extends ControllerHelper {
     @GetMapping("/equipments")
     public ResponseEntity<?> getAllEquipments() {
 
-        if (equipmentService == null) {
-            return new ResponseEntity<>(new String("sssssss"), HttpStatus.OK);
-        }
-
         try {
 
             List<Equipment> equipments = equipmentService.getAllEquipments();
@@ -50,15 +42,13 @@ public class EquipmentController extends ControllerHelper {
             return new ResponseEntity<>(equipments, HttpStatus.OK);
 
         } catch (Exception e) {
-            System.out.println(e.getClass());
             return getResponseEntityDependingOnException(e);
         }
 
-        // return new ResponseEntity<>(new Equipment(), HttpStatus.OK);
     }
 
     @PostMapping("/equipments")
-    public ResponseEntity<?> addEquipment(@RequestBody Equipment equipment) {
+    public ResponseEntity<?> addEquipment(Equipment equipment) {
 
         try {
 

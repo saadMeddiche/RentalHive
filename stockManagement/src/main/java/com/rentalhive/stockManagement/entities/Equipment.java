@@ -18,7 +18,6 @@ public class Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "The name of equipment can not be empty")
     @NotNull(message = "The name of equipment can not be null")
     @NotBlank(message = "The name of equipment can not be blank")
     private String name;
@@ -28,7 +27,7 @@ public class Equipment {
 
     @NotNull(message = "The user that added the equipment can not be null")
     @ManyToOne
-    @Valid
+    @Valid    
     private User added_by;
 
     @NotNull(message = "The category of the equipment can not be null")
