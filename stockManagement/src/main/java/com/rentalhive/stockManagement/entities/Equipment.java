@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -26,10 +27,12 @@ public class Equipment {
     private Double price_per_day;
 
     @NotNull(message = "The user that added the equipment can not be null")
+    @ManyToOne
     @Valid
     private User added_by;
 
     @NotNull(message = "The category of the equipment can not be null")
+    @ManyToOne
     @Valid
     private Category category;
 

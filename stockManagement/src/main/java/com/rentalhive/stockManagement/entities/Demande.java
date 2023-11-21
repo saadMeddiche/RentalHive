@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class Demande {
     private Long id;
 
     @NotNull(message = "The renter can not be null")
+    @ManyToOne
     private User renter;
 
     @NotEmpty(message = "The description can not be empty")
@@ -28,6 +30,7 @@ public class Demande {
     private Boolean accepted;
 
     // Can Be Null
+    @ManyToOne
     private User verified_by;
 
     // Can Be Null
