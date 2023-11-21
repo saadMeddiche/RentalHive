@@ -1,6 +1,7 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Equipment;
+import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.repositories.CategoryRepository;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.repositories.UserRepository;
@@ -23,10 +24,10 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
 
     @Autowired
     private EquipmentRepository equipmentRepository;
-    @Autowired
+/*    @Autowired
     private UserServiceImp userService;
     @Autowired
-    private CategoryServiceImp categoryService;
+    private CategoryServiceImp categoryService;*/
 
     public EquipmentServiceImp(EquipmentRepository equipmentRepository) {
         super(equipmentRepository);
@@ -74,5 +75,19 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         return equipmentRepository.findById(id);
     }
 
+
+    public boolean EquipmentQuantityExist(Equipment equipment){
+
+        return false;
+    }
+    public boolean isExist(Equipment equipment){
+
+        return false;
+    }
+
+    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity){
+
+        return null;
+    }
 
 }

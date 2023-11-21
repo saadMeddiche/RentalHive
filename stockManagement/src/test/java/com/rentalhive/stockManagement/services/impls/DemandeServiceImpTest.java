@@ -1,6 +1,5 @@
 package com.rentalhive.stockManagement.services.impls;
 
-import com.rentalhive.stockManagement.embeddables.StockQuantity;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
@@ -55,8 +54,6 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
 
     LocalDateTime date_demande;
 
-    List<StockQuantity> stockQuantities=new ArrayList<>();
-
     @Nested
     class addDemande implements Testing.add {
 
@@ -67,26 +64,25 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
             resetTheAttributes();
         }
 
-/**
+        /**
          * Test case to verify that no Exception is thrown when all is good.
          *
-         * @return None*/
-
-
+         * @param None
+         * @return None
+         */
         @TestFactory
         public Stream<DynamicTest> whenAllIsGood_thenShouldNotException() {
             return DynamicTestForAssertDoesNotThrow(List.of(createDemande()), demandeServiceImp::addDemande);
         }
 
-/*
+        /**
          * Generates a stream of dynamic tests for the scenario when adding a demande
          * that is verified from the beginning.
          * If the demande is verified by a user, has a verification date and is
          * accepted, then adding the demande should throw a ValidationException.
          *
-         * @return A stream of dynamic tests*/
-
-
+         * @return A stream of dynamic tests
+         */
         @TestFactory
         public Stream<DynamicTest> whenAddingADemandeThatIsVerifiedFromTheBegining_thenShouldThrowValidationException() {
 
@@ -116,14 +112,13 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
 
         }
 
-/**
+        /**
          * Generate a stream of dynamic tests for when something is wrong with the
          * dates,
          * then throw an IllegalArgumentException.
          *
          * @return a stream of dynamic tests
          */
-
         @TestFactory
         public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowDateValidationException() {
             return DynamicTestStreamForAssertThrows(createTestsDemandsForDatesValidation(),
@@ -131,7 +126,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
                     DateValidationException.class);
         }
 
-/**
+        /**
          * This function creates a stream of dynamic tests for the scenario when
          * non-nullable attributes are null,
          * and it expects a ValidationException to be thrown. It adds various Demande
@@ -141,9 +136,8 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
          * dynamic test and asserts that adding the Demande to the DemandeServiceImp
          * object throws a ValidationException.
          *
-         * @return a stream of dynamic tests*/
-
-
+         * @return a stream of dynamic tests
+         */
         @TestFactory
         public Stream<DynamicTest> whenNonNullableAttributeAreNull_thenShouldThrowValidationException() {
 
@@ -153,12 +147,12 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
 
         }
 
-/**
+        /**
          * Reset all the attributes of the nested class addDemande.
          *
-         * @return None*/
-
-
+         * @param None
+         * @return None
+         */
         public void resetTheAttributes() {
             renter = new User();
             verified_by = null;
@@ -170,12 +164,11 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
             date_demande = getDateTime("2004-01-01T12:00:00");
         }
 
-*
+        /**
          * Generates a list of Demande objects for dates validation testing.
          *
          * @return A list of Demande objects
-
-
+         */
         public List<Demande> createTestsDemandsForDatesValidation() {
 
             List<Demande> demands = new ArrayList<>();
@@ -200,12 +193,11 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
             return demands;
         }
 
-*
+        /**
          * Generates a list of test Demande objects for null validation.
          *
          * @return a list of Demande objects for null validation
-
-
+         */
         public List<Demande> createTestsDemandsForNullValidation() {
 
             List<Demande> demands = new ArrayList<>();
@@ -252,25 +244,24 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
             resetTheAttributes();
         }
 
-*
+        /**
          * Test case to verify that no Exception is thrown when all is good.
          *
+         * @param None
          * @return None
-
-
+         */
         @TestFactory
         public Stream<DynamicTest> whenAllIsGood_thenShouldNotException() {
             return DynamicTestForAssertDoesNotThrow(List.of(createDemande()), demandeServiceImp::updateDemand);
         }
 
-*
+        /**
          * Generate a stream of dynamic tests for when something is wrong with the
          * dates,
          * then throw an IllegalArgumentException.
          *
          * @return a stream of dynamic tests
-
-
+         */
         @TestFactory
         public Stream<DynamicTest> whenSomeThingWrongWithTheDates_thenShouldThrowDateValidationException() {
             return DynamicTestStreamForAssertThrows(createTestsDemandsForDatesValidation(),
@@ -278,7 +269,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
                     DateValidationException.class);
         }
 
-*
+        /**
          * This function creates a stream of dynamic tests for the scenario when
          * non-nullable attributes are null,
          * and it expects a ValidationException to be thrown. It adds various Demande
@@ -289,8 +280,7 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
          * object throws a ValidationException.
          *
          * @return a stream of dynamic tests
-
-
+         */
         @TestFactory
         public Stream<DynamicTest> whenNonNullableAttributeAreNull_thenShouldThrowValidationException() {
 
@@ -300,12 +290,12 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
 
         }
 
-*
+        /**
          * Reset all the attributes of the nested class updateDemand.
          *
+         * @param None
          * @return None
-
-
+         */
         public void resetTheAttributes() {
             renter = new User();
             verified_by = new User();
@@ -317,12 +307,11 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
             date_demande = getDateTime("2004-01-01T12:00:00");
         }
 
-*
+        /**
          * Generates a list of test demands for dates validation.
          *
          * @return a list of Demande objects
-
-
+         */
         public List<Demande> createTestsDemandsForDatesValidation() {
 
             List<Demande> demands = new addDemande().createTestsDemandsForDatesValidation();
@@ -337,12 +326,11 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
             return demands;
         }
 
-*
+        /**
          * Generates a list of test demands for null validation.
          *
          * @return A list of Demande objects.
-
-
+         */
         public List<Demande> createTestsDemandsForNullValidation() {
 
             List<Demande> demands = new addDemande().createTestsDemandsForNullValidation();
@@ -364,26 +352,24 @@ public class DemandeServiceImpTest extends DynamicTestHelper implements Testing 
 
     }
 
-*
+    /**
      * Parses the given date string and returns a LocalDateTime object.
      *
      * @param date the date string to be parsed in the format
      *             "yyyy-MM-dd'T'HH:mm:ss"
      * @return a LocalDateTime object representing the parsed date, or null if the
      *         input string is null
-
-
+     */
     public LocalDateTime getDateTime(String date) {
 
         return (date != null) ? LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) : null;
     }
 
-*
+    /**
      * Create a Demande object with the attribute of nested class addDemande.
      *
      * @return The created Demande object.
-
-
+     */
     public Demande createDemande() {
         return new Demande(renter, description, accepted, verified_by, date_verification, date_reservation,
                 date_expiration, date_demande);
