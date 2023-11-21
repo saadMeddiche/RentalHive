@@ -25,6 +25,7 @@ public class StockServiceImp implements StockService {
     private UserService userService;
     @Autowired
     private StatusService statusService;
+
     public List<Stock> getAllStocks() {
         return stockRepository.findAll();
     }

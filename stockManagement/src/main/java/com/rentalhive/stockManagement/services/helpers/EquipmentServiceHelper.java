@@ -53,13 +53,13 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     protected void validateEquipmentOnAdding(Equipment equipment) {
 
-        // Inputes Validation
+        // Inputs Validation
         validateObject(equipment);
 
         // throwException If The ID Is Null
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
-        // throwException If there is an equipment with the same name and category
+        // throwException If there is equipment with the same name and category
         throwExceptionIfEquipmentAlreadyExistByNameAndCategory(equipment);
 
         // throwException If The User exist in the database (user table)
@@ -71,7 +71,7 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     protected void validateEquipmentOnUpdating(Equipment equipment) {
 
-        // Inputes Validation
+        // Inputs Validation
         validateObject(equipment);
 
         // throwException If The ID Is Null
