@@ -1,24 +1,25 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.rentalhive.stockManagement.embeddables.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
+import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.repositories.DemandeRepository;
+import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.DemandeService;
 import com.rentalhive.stockManagement.services.helpers.DemandeServiceHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class DemandeServiceImp extends DemandeServiceHelper implements DemandeService {
 
-    @Autowired
-    private DemandeRepository demandeRepository;
 
-    public DemandeServiceImp(DemandeRepository demandeRepository) {
-        super(demandeRepository);
-    }
+    final DemandeRepository demandeRepository;
+
     @Override
     public List<Demande> getAllDemandes() {
         return demandeRepository.findAll();

@@ -42,7 +42,7 @@ public class Demande {
     @NotNull(message = "The date of demande can not be null")
     private LocalDateTime date_demande;
 
-    @OneToMany
+    @ManyToMany
     private List<Stock> stocks;
 
     public List<Stock> getStocks() {

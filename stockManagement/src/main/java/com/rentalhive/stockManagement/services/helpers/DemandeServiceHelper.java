@@ -12,20 +12,31 @@ import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.impls.EquipmentServiceImp;
 import com.rentalhive.stockManagement.services.impls.UserServiceImp;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+@RequiredArgsConstructor
+@Component
 public class DemandeServiceHelper extends ServiceHelper {
 
-    DemandeRepository demandeRepository;
-    EquipmentRepository equipmentRepository;
+     DemandeRepository demandeRepository;
+     EquipmentRepository equipmentRepository;
 
-    public DemandeServiceHelper(DemandeRepository demandeRepository) {
-        this.demandeRepository = demandeRepository;
+    @Autowired
+    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
+        this.equipmentRepository = equipmentRepository;
     }
 
+    @Autowired
+    public void setRepository(@Qualifier("demandeRepository") DemandeRepository demandeRepository) {
+        this.demandeRepository = demandeRepository;
+    }
     Predicate<Demande> isIdOfDemandeNull = demande -> demande.getId() == null;
 
     Predicate<Demande> isUserDoNotExist = demande -> {
@@ -69,7 +80,7 @@ public class DemandeServiceHelper extends ServiceHelper {
 
         throwExceptionIfDateReservationLowerThanDemandeDate(demande);
 
-        demande.setStocks(CreateStockList(stockQuantities));
+        demande.setStocks(CreateStockList(stockQuantities,demande));
 
         return demande;
     }
@@ -96,7 +107,7 @@ public class DemandeServiceHelper extends ServiceHelper {
 
         throwExceptionIfDateReservationLowerThanVerificationDate(demande);
 
-        demande.setStocks(CreateStockList(stockQuantities));
+        demande.setStocks(CreateStockList(stockQuantities,demande));
 
         return demande;
     }
@@ -111,14 +122,14 @@ public class DemandeServiceHelper extends ServiceHelper {
 
     }
 
-    protected List<Stock> CreateStockList(List<StockQuantity> stockQuantities){
+    protected List<Stock> CreateStockList(List<StockQuantity> stockQuantities,Demande demande){
         List<Stock> stocks=new ArrayList<>();
         stockQuantities.forEach(id->{
             Equipment equipment=new Equipment();
             equipment.setId(id.getId());
             throwExceptionIfEquipmentDoesNotExist(equipment);
-            throwExceptionIfEquipmentQuantityDoesNotExist(equipment,id.getQuantity());
-            stocks.addAll(new EquipmentServiceImp(equipmentRepository).getStocksByEquipemntQuantity(equipment, id.getQuantity()));
+            throwExceptionIfEquipmentQuantityDoesNotExist(equipment,id.getQuantity(),demande);
+            stocks.addAll(new EquipmentServiceImp(equipmentRepository).getStocksByEquipemntQuantity(equipment, id.getQuantity(),demande));
         });
         return stocks;
     }
@@ -172,8 +183,8 @@ public class DemandeServiceHelper extends ServiceHelper {
         }
     }
 
-    protected void throwExceptionIfEquipmentQuantityDoesNotExist(Equipment equipment,Integer quantity) {
-        if (new EquipmentServiceImp(equipmentRepository).countAvailableStocksForEquipment(equipment)>=quantity) {
+    protected void throwExceptionIfEquipmentQuantityDoesNotExist(Equipment equipment,Integer quantity,Demande demande) {
+        if (new EquipmentServiceImp(equipmentRepository).countAvailableStocksForEquipment(equipment,demande)>=quantity) {
             throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
         }
     }

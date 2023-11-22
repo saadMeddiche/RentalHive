@@ -1,5 +1,6 @@
 package com.rentalhive.stockManagement.services.impls;
 
+import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.repositories.CategoryRepository;
@@ -20,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
     @Autowired
@@ -79,18 +79,19 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
     }
 
 
-    public Integer countAvailableStocksForEquipment(Equipment equipment){
-
-        return equipmentRepository.CountAvailableStocksForEquipment(equipment.getId());
+    public Integer countAvailableStocksForEquipment(Equipment equipment, Demande demande){
+        return equipmentRepository.CountStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration());
     }
+
+
     public boolean isExist(Equipment equipment){
 
         return equipmentRepository.existsById(equipment.getId());
     }
 
-    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity){
+    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity,Demande demande){
         Pageable pageable = PageRequest.of(0, quantity);
-        return equipmentRepository.findAvailableStocksForEquipment(equipment.getId(), pageable);
+        return equipmentRepository.findStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration(), pageable);
     }
 
 }

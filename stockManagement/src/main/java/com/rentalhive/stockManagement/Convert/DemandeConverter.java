@@ -1,11 +1,11 @@
 package com.rentalhive.stockManagement.Convert;
 
-import com.rentalhive.stockManagement.DTO.DemandeDto;
+import com.rentalhive.stockManagement.DTO.AddDemandeDto;
 import com.rentalhive.stockManagement.entities.Demande;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 
-public class DemandeConverter extends AbstractConverter<Demande, DemandeDto>{
+public class DemandeConverter extends AbstractConverter<Demande, AddDemandeDto>{
     private final ModelMapper mapper;
 
     public DemandeConverter(ModelMapper mapper) {
@@ -16,12 +16,12 @@ public class DemandeConverter extends AbstractConverter<Demande, DemandeDto>{
     }
 
     @Override
-    public Demande convertDtoToEntity(DemandeDto studentDto) {
+    public Demande convertDtoToEntity(AddDemandeDto studentDto) {
         return mapper.map(studentDto, Demande.class);
     }
 
     @Override
-    public DemandeDto convertEntityToDto(Demande student) {
-        return mapper.map(student, DemandeDto.class);
+    public AddDemandeDto convertEntityToDto(Demande student) {
+        return mapper.map(student, AddDemandeDto.class);
     }
 }
