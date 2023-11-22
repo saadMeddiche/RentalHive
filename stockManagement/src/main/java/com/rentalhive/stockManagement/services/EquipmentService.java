@@ -13,4 +13,6 @@ public interface EquipmentService {
     public Equipment updateEquipment(Equipment equipment);
 
     public void deleteEquipment(Equipment equipment);
+
+    public Equipment findById(Long id);
 }

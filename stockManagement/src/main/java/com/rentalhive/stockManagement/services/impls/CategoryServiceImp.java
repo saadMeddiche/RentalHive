@@ -4,6 +4,7 @@ import com.rentalhive.stockManagement.entities.Category;
 import com.rentalhive.stockManagement.repositories.CategoryRepository;
 import com.rentalhive.stockManagement.services.CategoryService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -13,19 +14,13 @@ import com.rentalhive.stockManagement.services.helpers.CategoryServiceHelper;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Component
+@Service @RequiredArgsConstructor
 public class CategoryServiceImp extends CategoryServiceHelper implements CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    public void setRepository(@Qualifier("categoryRepository") CategoryRepository categoryRepository) {
+    public CategoryServiceImp(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
-    }
-
-    public CategoryServiceImp() {
-
     }
 
     public List<Category> getAllCategorys() {
@@ -36,11 +31,11 @@ public class CategoryServiceImp extends CategoryServiceHelper implements Categor
 
         throwExceptionIfIdOfCategoryIsNull(id);
 
-        Optional<Category> user = categoryRepository.findById(id);
+        Optional<Category> category = categoryRepository.findById(id);
 
-        thowExceptionIfCategoryIsEmpty(user);
+        thowExceptionIfCategoryIsEmpty(category);
 
-        return user.get();
+        return category.get();
     }
 
     public Category addCategory(Category category) {

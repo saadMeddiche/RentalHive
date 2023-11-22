@@ -5,6 +5,7 @@ import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.UserService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,19 +15,13 @@ import com.rentalhive.stockManagement.services.helpers.UserServiceHelper;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Component
+@Service @RequiredArgsConstructor
 public class UserServiceImp extends UserServiceHelper implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public void setRepository(@Qualifier("userRepository") UserRepository userRepository) {
+    public UserServiceImp(UserRepository userRepository){
         this.userRepository = userRepository;
-    }
-
-    public UserServiceImp() {
-
     }
 
     public List<User> getAllUsers() {
@@ -35,11 +30,19 @@ public class UserServiceImp extends UserServiceHelper implements UserService {
 
     public User findById(Long id) {
 
+        System.out.println("-----------------------find 1");
+
         throwExceptionIfIdOfUserIsNull(id);
+
+        System.out.println("-----------------------find 2");
 
         Optional<User> user = userRepository.findById(id);
 
+        System.out.println("-----------------------find 3");
+
         thowExceptionIfUserIsEmpty(user);
+
+        System.out.println("-----------------------find 4");
 
         return user.get();
     }

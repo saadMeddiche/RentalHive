@@ -2,6 +2,7 @@ package com.rentalhive.stockManagement.controllers;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -13,23 +14,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
 import com.rentalhive.stockManagement.services.EquipmentService;
+import com.rentalhive.stockManagement.converters.EquipmentConverter;
+
+import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentAddDto;
 
 @RestController
 @RequestMapping("/api")
-@Component
+@RequiredArgsConstructor
+
 public class EquipmentController extends ControllerHelper {
 
-    private EquipmentService equipmentService;
+    private final EquipmentService equipmentService;
 
-    @Autowired
-    public void setService(@Qualifier("equipmentServiceImp") EquipmentService equipmentService) {
+    private final EquipmentConverter equipmentConverter;
+
+    public EquipmentController(EquipmentService equipmentService , EquipmentConverter equipmentConverter){
         this.equipmentService = equipmentService;
+        this.equipmentConverter = equipmentConverter;
     }
 
     @GetMapping("/equipments")
@@ -48,15 +57,25 @@ public class EquipmentController extends ControllerHelper {
     }
 
     @PostMapping("/equipments")
-    public ResponseEntity<?> addEquipment(Equipment equipment) {
-
+    public ResponseEntity<?> addEquipment(@ModelAttribute EquipmentAddDto equipmentAddDto) {
+        System.out.println(equipmentAddDto.toString());
         try {
 
+            System.out.println("-----------------------Test 1");
+
+            Equipment equipment = equipmentConverter.convertToEntity(equipmentAddDto);
+            System.out.println("-----------------------Test 2");
+
             Equipment addedEquipment = equipmentService.addEquipment(equipment);
+
+            System.out.println("-----------------------Test 3");
 
             return new ResponseEntity<>(addedEquipment, HttpStatus.OK);
 
         } catch (Exception e) {
+            System.out.println("-----------------------Test 4");
+            System.out.println(e.getClass());
+
             return getResponseEntityDependingOnException(e);
         }
     }
