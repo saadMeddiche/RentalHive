@@ -3,21 +3,29 @@ package com.rentalhive.stockManagement.services.helpers;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
-import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.impls.CategoryServiceImp;
 import com.rentalhive.stockManagement.services.impls.UserServiceImp;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Component
 
 public class EquipmentServiceHelper extends ServiceHelper {
 
     EquipmentRepository equipmentRepository;
 
-    public EquipmentServiceHelper(EquipmentRepository equipmentRepository) {
+    @Autowired
+    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
         this.equipmentRepository = equipmentRepository;
     }
 
@@ -54,13 +62,13 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     protected void validateEquipmentOnAdding(Equipment equipment) {
 
-        // Inputs Validation
+        // Inputes Validation
         validateObject(equipment);
 
         // throwException If The ID Is Null
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
-        // throwException If there is equipment with the same name and category
+        // throwException If there is an equipment with the same name and category
         throwExceptionIfEquipmentAlreadyExistByNameAndCategory(equipment);
 
         // throwException If The User exist in the database (user table)
@@ -72,7 +80,7 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     protected void validateEquipmentOnUpdating(Equipment equipment) {
 
-        // Inputs Validation
+        // Inputes Validation
         validateObject(equipment);
 
         // throwException If The ID Is Null

@@ -25,7 +25,7 @@ module stockManagement {
     requires spring.core;
     requires spring.data.commons;
     requires spring.data.jpa;
-    requires spring.security.crypto;
+    // requires spring.security.crypto;
     requires spring.web;
     requires modelmapper;
 }

@@ -55,7 +55,7 @@ public class DemandeServiceHelper extends ServiceHelper {
 
     Predicate<Demande> isDateReservationHigherThanVerificationDate=demande -> demande.getDate_verification().isBefore(demande.getDate_reservation());
 
-    Predicate<Equipment> isEquipmentExist=equipment -> new EquipmentServiceImp(equipmentRepository).isExist(equipment);
+    Predicate<Equipment> isEquipmentExist=equipment -> new EquipmentServiceImp().isExist(equipment);
 
 
     // Check If The Demande Exists
@@ -129,7 +129,7 @@ public class DemandeServiceHelper extends ServiceHelper {
             equipment.setId(id.getId());
             throwExceptionIfEquipmentDoesNotExist(equipment);
             throwExceptionIfEquipmentQuantityDoesNotExist(equipment,id.getQuantity(),demande);
-            stocks.addAll(new EquipmentServiceImp(equipmentRepository).getStocksByEquipemntQuantity(equipment, id.getQuantity(),demande));
+            stocks.addAll(new EquipmentServiceImp().getStocksByEquipemntQuantity(equipment, id.getQuantity(),demande));
         });
         return stocks;
     }
@@ -184,7 +184,7 @@ public class DemandeServiceHelper extends ServiceHelper {
     }
 
     protected void throwExceptionIfEquipmentQuantityDoesNotExist(Equipment equipment,Integer quantity,Demande demande) {
-        if (new EquipmentServiceImp(equipmentRepository).countAvailableStocksForEquipment(equipment,demande)>=quantity) {
+        if (new EquipmentServiceImp().countAvailableStocksForEquipment(equipment,demande)>=quantity) {
             throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
         }
     }

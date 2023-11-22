@@ -1,3 +1,4 @@
+/*
 package com.rentalhive.stockManagement.Convert;
 
 import com.rentalhive.stockManagement.DTO.AddDemandeDto;
@@ -25,3 +26,4 @@ public class DemandeConverter extends AbstractConverter<Demande, AddDemandeDto>{
         return mapper.map(student, AddDemandeDto.class);
     }
 }
+*/

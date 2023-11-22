@@ -1,6 +1,5 @@
 package com.rentalhive.stockManagement.services.impls;
 
-import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Status;
 import com.rentalhive.stockManagement.repositories.StatusRepository;
 import com.rentalhive.stockManagement.services.StatusService;
@@ -32,10 +31,5 @@ public class StatusServiceImp implements StatusService {
 
     public void deleteStatus(Status status) {
 
-    }
-
-    @Override
-    public Optional<Status> findById(long id){
-        return statusRepository.findById(id);
     }
 }

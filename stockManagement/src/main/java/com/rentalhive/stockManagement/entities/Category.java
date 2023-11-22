@@ -21,7 +21,6 @@ public class Category {
     @NotBlank(message = "The name of category can not be blank")
     private String name;
 
-
     public Category() {
     }
 

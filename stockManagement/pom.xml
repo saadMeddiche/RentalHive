@@ -11,7 +11,7 @@
 	<groupId>com.rentalhive</groupId>
 	<artifactId>stockManagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!-- <packaging>war</packaging> -->
 	<name>stockManagement</name>
 	<description>BâtisPro est une entreprise spécialisée dans la location de matériel de construction. BâtisPro fournit une large gamme d&apos;équipements, tels que des excavatrices, des bétonnières, des échafaudages, etc., à des entrepreneurs et des entreprises du bâtiment pour leurs projets de construction.</description>
 	<properties>
@@ -41,11 +41,20 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
+		
+		<!-- <dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency> -->
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.30</version>
+			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -56,10 +65,21 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Password Hashing Using scrypt Algorithm -->
 		
 		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.1.1</version>
+		   </dependency>
+		
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
+		<!-- Password Hashing Using scrypt Algorithm -->
+		
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 			<version>3.1.5</version>
@@ -69,7 +89,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>6.1.5</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -105,11 +125,7 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		  </dependency>
-		<dependency>
-			<groupId>org.modelmapper</groupId>
-			<artifactId>modelmapper</artifactId>
-			<version>2.4.2</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>

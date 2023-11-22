@@ -3,37 +3,29 @@ package com.rentalhive.stockManagement.services.impls;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Stock;
-import com.rentalhive.stockManagement.repositories.CategoryRepository;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
-import com.rentalhive.stockManagement.repositories.UserRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
-
-import lombok.AllArgsConstructor;
-
 import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Component
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
-    @Autowired
     private EquipmentRepository equipmentRepository;
 
     @Autowired
-    private UserServiceImp userService;
-
-    @Autowired
-    private CategoryServiceImp categoryService;
-
-    public EquipmentServiceImp(EquipmentRepository equipmentRepository) {
-        super(equipmentRepository);
+    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
+        this.equipmentRepository = equipmentRepository;
     }
 
     public List<Equipment> getAllEquipments() {
@@ -89,7 +81,7 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         return equipmentRepository.existsById(equipment.getId());
     }
 
-    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity,Demande demande){
+    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity, Demande demande){
         Pageable pageable = PageRequest.of(0, quantity);
         return equipmentRepository.findStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration(), pageable);
     }
