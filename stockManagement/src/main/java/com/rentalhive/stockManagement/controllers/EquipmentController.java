@@ -61,20 +61,14 @@ public class EquipmentController extends ControllerHelper {
         System.out.println(equipmentAddDto.toString());
         try {
 
-            System.out.println("-----------------------Test 1");
-
             Equipment equipment = equipmentConverter.convertToEntity(equipmentAddDto);
-            System.out.println("-----------------------Test 2");
+
 
             Equipment addedEquipment = equipmentService.addEquipment(equipment);
-
-            System.out.println("-----------------------Test 3");
 
             return new ResponseEntity<>(addedEquipment, HttpStatus.OK);
 
         } catch (Exception e) {
-            System.out.println("-----------------------Test 4");
-            System.out.println(e.getClass());
 
             return getResponseEntityDependingOnException(e);
         }

@@ -21,7 +21,8 @@ public class UserServiceImp extends UserServiceHelper implements UserService {
     private final UserRepository userRepository;
 
     public UserServiceImp(UserRepository userRepository){
-        this.userRepository = userRepository;
+
+        this.userRepository = userRepositor;
     }
 
     public List<User> getAllUsers() {
@@ -30,19 +31,11 @@ public class UserServiceImp extends UserServiceHelper implements UserService {
 
     public User findById(Long id) {
 
-        System.out.println("-----------------------find 1");
-
         throwExceptionIfIdOfUserIsNull(id);
-
-        System.out.println("-----------------------find 2");
 
         Optional<User> user = userRepository.findById(id);
 
-        System.out.println("-----------------------find 3");
-
         thowExceptionIfUserIsEmpty(user);
-
-        System.out.println("-----------------------find 4");
 
         return user.get();
     }
