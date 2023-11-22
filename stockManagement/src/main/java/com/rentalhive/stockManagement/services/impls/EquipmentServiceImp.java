@@ -1,12 +1,16 @@
 package com.rentalhive.stockManagement.services.impls;
 
+import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Equipment;
+import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
 import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -61,4 +65,25 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         equipmentRepository.delete(equipment);
 
     }
+
+    public Optional<Equipment> findById(long id){
+        return equipmentRepository.findById(id);
+    }
+
+
+    public Integer countAvailableStocksForEquipment(Equipment equipment, Demande demande){
+        return equipmentRepository.CountStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration());
+    }
+
+
+    public boolean isExist(Equipment equipment){
+
+        return equipmentRepository.existsById(equipment.getId());
+    }
+
+    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity, Demande demande){
+        Pageable pageable = PageRequest.of(0, quantity);
+        return equipmentRepository.findStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration(), pageable);
+    }
+
 }
