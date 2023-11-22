@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Component
 public class UserServiceImp extends UserServiceHelper implements UserService {
 
     private UserRepository userRepository;
