@@ -17,4 +17,6 @@ public interface UserService {
     public void deleteUser(User user);
 
     public User findById(Long id);
+
+    public boolean isExists(User user);
 }

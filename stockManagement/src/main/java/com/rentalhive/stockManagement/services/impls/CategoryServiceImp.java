@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Component
+
 public class CategoryServiceImp extends CategoryServiceHelper implements CategoryService {
 
     private CategoryRepository categoryRepository;

@@ -1,4 +1,4 @@
-package com.rentalhive.stockManagement.converter;
+package com.rentalhive.stockManagement.converters;
 
 import com.rentalhive.stockManagement.entities.Equipment;
 
@@ -8,40 +8,41 @@ import com.rentalhive.stockManagement.services.UserService;
 
 import com.rentalhive.stockManagement.services.EquipmentService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentAddDto;
 import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentUpdateDto;
 
+import com.rentalhive.stockManagement.services.impls.UserServiceImp;
+
 import com.rentalhive.stockManagement.entities.Category;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class EquipmentConverter {
 
-    UserService userservice;
-    CategoryService categoryService;
-    EquipmentService equipmentService;
 
-    @Autowired
-    public void setUserService(@Qualifier("userServiceImp") UserService userservice) {
-        this.userservice = userservice;
-    }
 
-    @Autowired
-    public void setCategoryService(@Qualifier("categoryServiceImp") CategoryService categoryService) {
+    public final UserService userservice;
+
+    public final CategoryService categoryService;
+
+    public final EquipmentService equipmentService;
+
+    public EquipmentConverter(UserService userService, CategoryService categoryService, EquipmentService equipmentService) {
+        this.userservice = userService;
         this.categoryService = categoryService;
-    }
-
-    @Autowired
-    public void setEquipmentService(@Qualifier("equipmentService") EquipmentService equipmentService) {
         this.equipmentService = equipmentService;
     }
+
 
     public Equipment convertToEntity(EquipmentAddDto equipmentAddDto) {
 
         User user = userservice.findById(equipmentAddDto.getAdded_by_id());
+
         Category category = categoryService.findById(equipmentAddDto.getCategory_Id());
 
         // Set the data to equipment
@@ -61,7 +62,6 @@ public class EquipmentConverter {
 
         // Set the data to equipment
         Equipment equipment = equipmentService.findById(EquipmentId);
-        equipment.setId(EquipmentId);
         equipment.setName(equipmentUpdateDto.getName());
         equipment.setPrice_per_day(equipmentUpdateDto.getPrice_per_day());
         equipment.setCategory(category);

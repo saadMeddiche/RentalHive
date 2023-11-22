@@ -26,7 +26,6 @@ public class DemandeController extends ControllerHelper {
 
     @GetMapping("/demandes")
     public ResponseEntity<?> getAllDemandes() {
-
         try {
 
             List<Demande> demandes = demandeService.getAllDemandes();
@@ -39,7 +38,7 @@ public class DemandeController extends ControllerHelper {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addDemande(@RequestBody()DemandeStockQuantityRequest request) {
+    public ResponseEntity<?> addDemande(@RequestBody() DemandeStockQuantityRequest request) {
 
         try {
             Demande demande = modelMapper.map(request.getDemandeDto(), Demande.class);
@@ -58,6 +57,7 @@ public class DemandeController extends ControllerHelper {
         try {
 
             Demande demande = modelMapper.map(demandeDto, Demande.class);
+            demande.setId(id);
             Demande addedDemande = demandeService.updateDemand(demande,stockQuantities);
             DemandeWithOutIdDto updatedDemandeDto= modelMapper.map(addedDemande, DemandeWithOutIdDto.class);
             return new ResponseEntity<>(updatedDemandeDto, HttpStatus.OK);
@@ -72,6 +72,7 @@ public class DemandeController extends ControllerHelper {
 
         try {
 
+            demande.setId(id);
             demandeService.deleteDemand(demande);
 
             return new ResponseEntity<>(HttpStatus.OK);
