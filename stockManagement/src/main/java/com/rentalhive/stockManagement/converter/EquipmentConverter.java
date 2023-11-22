@@ -1,3 +1,4 @@
+/*
 package com.rentalhive.stockManagement.converter;
 
 import com.rentalhive.stockManagement.entities.Equipment;
@@ -70,3 +71,4 @@ public class EquipmentConverter {
 
     }
 }
+*/

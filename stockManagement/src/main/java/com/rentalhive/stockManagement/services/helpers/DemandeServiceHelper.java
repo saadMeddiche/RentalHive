@@ -10,8 +10,11 @@ import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.DemandeRepository;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.repositories.UserRepository;
+import com.rentalhive.stockManagement.services.EquipmentService;
+import com.rentalhive.stockManagement.services.UserService;
 import com.rentalhive.stockManagement.services.impls.EquipmentServiceImp;
 import com.rentalhive.stockManagement.services.impls.UserServiceImp;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,26 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-@RequiredArgsConstructor
+
 @Component
+@RequiredArgsConstructor
 public class DemandeServiceHelper extends ServiceHelper {
 
-     DemandeRepository demandeRepository;
-     EquipmentRepository equipmentRepository;
+     private final DemandeRepository demandeRepository;
+     private final EquipmentService equipmentService;
+     private final UserService userService;
 
-    @Autowired
-    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
-        this.equipmentRepository = equipmentRepository;
-    }
-
-    @Autowired
-    public void setRepository(@Qualifier("demandeRepository") DemandeRepository demandeRepository) {
-        this.demandeRepository = demandeRepository;
-    }
     Predicate<Demande> isIdOfDemandeNull = demande -> demande.getId() == null;
 
     Predicate<Demande> isUserDoNotExist = demande -> {
-        return !new UserServiceImp().isExists(demande.getRenter());
+        return !userService.isExists(demande.getRenter());
     };
 
     Predicate<Demande> isReservationDateHigherThanExpiredDate=demande->
@@ -55,7 +51,7 @@ public class DemandeServiceHelper extends ServiceHelper {
 
     Predicate<Demande> isDateReservationHigherThanVerificationDate=demande -> demande.getDate_verification().isBefore(demande.getDate_reservation());
 
-    Predicate<Equipment> isEquipmentExist=equipment -> new EquipmentServiceImp().isExist(equipment);
+    Predicate<Equipment> isEquipmentExist= equipmentService::isExist;
 
 
     // Check If The Demande Exists
@@ -124,12 +120,12 @@ public class DemandeServiceHelper extends ServiceHelper {
 
     protected List<Stock> CreateStockList(List<StockQuantity> stockQuantities,Demande demande){
         List<Stock> stocks=new ArrayList<>();
-        stockQuantities.forEach(id->{
+        stockQuantities.forEach(eS->{
             Equipment equipment=new Equipment();
-            equipment.setId(id.getId());
+            equipment.setId(eS.getId());
             throwExceptionIfEquipmentDoesNotExist(equipment);
-            throwExceptionIfEquipmentQuantityDoesNotExist(equipment,id.getQuantity(),demande);
-            stocks.addAll(new EquipmentServiceImp().getStocksByEquipemntQuantity(equipment, id.getQuantity(),demande));
+            throwExceptionIfEquipmentQuantityDoesNotExist(equipment,eS.getQuantity(),demande);
+            stocks.addAll(equipmentService.getStocksByEquipemntQuantity(equipment, eS.getQuantity(),demande));
         });
         return stocks;
     }
@@ -184,7 +180,7 @@ public class DemandeServiceHelper extends ServiceHelper {
     }
 
     protected void throwExceptionIfEquipmentQuantityDoesNotExist(Equipment equipment,Integer quantity,Demande demande) {
-        if (new EquipmentServiceImp().countAvailableStocksForEquipment(equipment,demande)>=quantity) {
+        if (equipmentService.countAvailableStocksForEquipment(equipment,demande)>=quantity) {
             throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
         }
     }
