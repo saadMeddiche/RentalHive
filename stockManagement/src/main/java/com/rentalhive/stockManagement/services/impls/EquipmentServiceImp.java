@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 

@@ -44,7 +44,10 @@ class EquipementServiceImplTest {
     @Test
     public void testSaveEquipementWithUnknownCategory(){
         LocalDateTime userRegistrationDate = LocalDateTime.of(2022, 4, 5, 0, 0, 0);
+/*
         User user=new User(new FullName("fname","lname"),"username",new AddressEmail("user@gmail.com"),new Password("password"),userRegistrationDate);
+*/
+        User user=new User("firstName","middleName","lastName","username","user@gmail.com","password",userRegistrationDate);
         Category category= new Category(1L,"User");
         Equipment equipment=new Equipment("name",50.30,user,category);
 

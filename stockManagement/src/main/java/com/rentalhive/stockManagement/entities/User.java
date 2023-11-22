@@ -45,15 +45,14 @@ public class User {
     @NotNull(message = "The date of creation of account can npt be null")
     private LocalDateTime date_creation_account;
 
-/*<<<<<<< HEAD
+
     public User(){};
     public User(FullName full_name, String user_name, AddressEmail email, Password password, LocalDateTime date_creation_account) {
         this.full_name = full_name;
         this.user_name = user_name;
         this.email = email;
         this.password = password;
-=======*/
-    public User() {
+        this.date_creation_account = date_creation_account;
     }
 
     public User(String firstName, String middleName, String lastName, String user_name, String email,
