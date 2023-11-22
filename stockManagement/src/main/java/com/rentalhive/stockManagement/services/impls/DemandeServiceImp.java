@@ -16,15 +16,19 @@ import com.rentalhive.stockManagement.services.DemandeService;
 import com.rentalhive.stockManagement.services.EquipmentService;
 import com.rentalhive.stockManagement.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+
 public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
-
     final DemandeRepository demandeRepository;
-    final EquipmentService equipmentService;
+
+
+    final EquipmentService equipmentService ;
+
     final UserService userService;
 
     @Override
@@ -53,10 +57,6 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
     }
     Predicate<Demande> isIdOfDemandeNull = demande -> demande.getId() == null;
 
-    Predicate<Demande> isUserDoNotExist = demande -> {
-        return !userService.isExists(demande.getRenter());
-    };
-
     Predicate<Demande> isReservationDateHigherThanExpiredDate=demande->
             demande.getDate_reservation().isBefore(demande.getDate_expiration());
 
@@ -69,11 +69,12 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
     Predicate<Demande> isDateReservationHigherThanVerificationDate=demande -> demande.getDate_verification().isBefore(demande.getDate_reservation());
 
-    Predicate<Equipment> isEquipmentExist= equipmentService::isExist;
+/*    Predicate<Equipment> isEquipmentExist= equipment->equipmentService.isExist(equipment);
 
 
     // Check If The Demande Exists
     Predicate<Demande> isDemandeExists = demande -> demandeRepository.existsById(demande.getId());
+    */
 
     protected Demande validateDemandeOnAdding(Demande demande, List<StockQuantity> stockQuantities) {
 
@@ -148,14 +149,15 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
     protected void throwExceptionIfTheDemandeExist(Demande demande) {
         // throwException If The Demande exist in the database (demande table)
-        if (isDemandeExists.test(demande)) {
+        if (demandeRepository.existsById(demande.getId())) {
             throw new DoNotExistsException("The demande does not exist");
+
         }
     }
 
     protected void throwExceptionIfUserDoNotExist(Demande demande) {
         // throwException If The User exist in the database (user table)
-        if (isUserDoNotExist.test(demande)) {
+        if (!userService.isExists(demande.getRenter())) {
             throw new DoNotExistsException("The user does not exist");
         }
     }
@@ -202,7 +204,7 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
     }
 
     protected void throwExceptionIfEquipmentDoesNotExist(Equipment equipment){
-        if (!isEquipmentExist.test(equipment)) {
+        if (!equipmentService.isExist(equipment)) {
             throw new ValidationException(List.of("The equipment you want doesn't exist in our stock"));
         }
     }
