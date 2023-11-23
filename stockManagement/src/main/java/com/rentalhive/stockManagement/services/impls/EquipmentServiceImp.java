@@ -22,17 +22,11 @@ import java.util.Optional;
 @Service
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
-    @Autowired
-    private EquipmentRepository equipmentRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CategoryService categoryService;
+    private final EquipmentRepository equipmentRepository;
 
     public EquipmentServiceImp(EquipmentRepository equipmentRepository, UserService userService, CategoryService categoryService) {
         super(equipmentRepository, userService, categoryService);
+        this.equipmentRepository = equipmentRepository;
     }
 
     public List<Equipment> getAllEquipments() {

@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class StockServiceImp implements StockService {
+
     private StockRepository stockRepository;
     public List<Stock> getAllStocks() {
         return null;

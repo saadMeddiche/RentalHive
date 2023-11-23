@@ -21,7 +21,6 @@ import com.rentalhive.stockManagement.entities.Category;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class EquipmentConverter {
 
 
