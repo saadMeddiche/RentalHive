@@ -15,4 +15,6 @@ public interface CategoryService {
     public void deleteCategory(Category category);
 
     public Category findById(Long id);
+
+    public boolean isExists(Category category);
 }

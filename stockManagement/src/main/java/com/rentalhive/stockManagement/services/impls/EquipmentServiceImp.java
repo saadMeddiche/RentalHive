@@ -1,30 +1,31 @@
 package com.rentalhive.stockManagement.services.impls;
 
+import com.rentalhive.stockManagement.entities.Equipment;import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
+import com.rentalhive.stockManagement.services.CategoryService;
 import com.rentalhive.stockManagement.services.EquipmentService;
+import com.rentalhive.stockManagement.services.UserService;
 import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Component
 public class EquipmentServiceImp extends EquipmentServiceHelper implements EquipmentService {
 
-    private EquipmentRepository equipmentRepository;
+    private final EquipmentRepository equipmentRepository;
 
-    @Autowired
-    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
+    public EquipmentServiceImp(EquipmentRepository equipmentRepository, UserService userService, CategoryService categoryService) {
+        super(equipmentRepository, userService, categoryService);
         this.equipmentRepository = equipmentRepository;
     }
 
@@ -42,6 +43,17 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
         return equipmentRepository.findById(equipment.getId());
+    }
+
+    public Equipment findById(Long id) {
+
+        throwExceptionIfIdOfEquipmentIsNull(id);
+
+        Optional<Equipment> equipment = equipmentRepository.findById(id);
+
+        thowExceptionIfEquipmentIsEmpty(equipment);
+
+        return equipment.get();
     }
 
     public Equipment addEquipment(Equipment equipment) {

@@ -1,13 +1,17 @@
 package com.rentalhive.stockManagement.services.helpers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.rentalhive.stockManagement.services.CategoryService;
+import com.rentalhive.stockManagement.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.rentalhive.stockManagement.entities.Equipment;
+import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
@@ -17,16 +21,18 @@ import com.rentalhive.stockManagement.services.impls.CategoryServiceImp;
 import com.rentalhive.stockManagement.services.impls.UserServiceImp;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Component
-
 public class EquipmentServiceHelper extends ServiceHelper {
 
-    EquipmentRepository equipmentRepository;
+    private EquipmentRepository equipmentRepository;
 
-    @Autowired
-    public void setRepository(@Qualifier("equipmentRepository") EquipmentRepository equipmentRepository) {
+    private UserService userService;
+
+    private CategoryService categoryService;
+    public EquipmentServiceHelper(EquipmentRepository equipmentRepository, UserService userService, CategoryService categoryService){
         this.equipmentRepository = equipmentRepository;
+        this.userService = userService;
+        this.categoryService =categoryService;
     }
 
     // Check If The ID Is Null
@@ -42,17 +48,17 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
     // Check If The User Exists
     Predicate<Equipment> isUserDoNotExist = equipment -> {
-        return !new UserServiceImp().isExists(equipment.getAdded_by());
+        return !userService.isExists(equipment.getAdded_by());
     };
 
     // Check If The Category Exists
     Predicate<Equipment> isCategoryDoNotExist = equipment -> {
-        return !new CategoryServiceImp().isExists(equipment.getCategory());
+        return !categoryService.isExists(equipment.getCategory());
     };
 
     // Check If The Equipment Exists
-    Predicate<Equipment> isEquipmentExists = equipment -> {
-        return equipmentRepository.existsById(equipment.getId());
+    Predicate<Equipment> isEquipmentDoNotExist = equipment -> {
+        return !equipmentRepository.existsById(equipment.getId());
     };
 
     protected void validationAfterGettingAllEquipments(List<Equipment> equipments) {
@@ -64,9 +70,6 @@ public class EquipmentServiceHelper extends ServiceHelper {
 
         // Inputes Validation
         validateObject(equipment);
-
-        // throwException If The ID Is Null
-        throwExceptionIfIdOfEquipmentIsNull(equipment);
 
         // throwException If there is an equipment with the same name and category
         throwExceptionIfEquipmentAlreadyExistByNameAndCategory(equipment);
@@ -86,8 +89,8 @@ public class EquipmentServiceHelper extends ServiceHelper {
         // throwException If The ID Is Null
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
-        // throwException If The Equipment exist in the database (equipment table)
-        throwExceptionIfTheEquipmentExist(equipment);
+        // throwException If The Equipment do not exist in the database (equipment table)
+        throwExceptionIfTheEquipmentDoNotExist(equipment);
 
         // throwException If The User exist in the database (user table)
         throwExceptionIfUserDoNotExist(equipment);
@@ -102,14 +105,16 @@ public class EquipmentServiceHelper extends ServiceHelper {
         // throwException If The ID Is Null
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
-        // throwException If The Equipment exist in the database (equipment table)
-        throwExceptionIfTheEquipmentExist(equipment);
+        // throwException If The Equipment do not exist in the database (equipment table)
+        throwExceptionIfTheEquipmentDoNotExist(equipment);
 
     }
 
-    protected void throwExceptionIfTheEquipmentExist(Equipment equipment) {
-        // throwException If The Equipment exist in the database (equipment table)
-        if (isEquipmentExists.test(equipment)) {
+
+
+    protected void throwExceptionIfTheEquipmentDoNotExist(Equipment equipment) {
+        // throwException If The Equipment do not exist in the database (equipment table)
+        if (isEquipmentDoNotExist.test(equipment)) {
             throw new DoNotExistsException("The equipment does not exist");
         }
     }
@@ -148,6 +153,14 @@ public class EquipmentServiceHelper extends ServiceHelper {
         if (isEquipmentsEmpty.test(equipments)) {
             throw new EmptyListException("There are no Equipments");
         }
+    }
+
+    public void throwExceptionIfIdOfEquipmentIsNull(Long id) {
+        throwExceptionIfObjectIsNull(id, "The ID of Equipment can not be null");
+    }
+
+    public void thowExceptionIfEquipmentIsEmpty(Optional<Equipment> equipment) {
+        throwExceptionIfOptionalObjectIsEmpty(equipment, "The Equipment do not exist");
     }
 
 }

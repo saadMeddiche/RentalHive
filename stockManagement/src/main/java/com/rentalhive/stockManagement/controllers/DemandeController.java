@@ -6,6 +6,7 @@ import com.rentalhive.stockManagement.DTO.UpdateDemandeDto;
 import com.rentalhive.stockManagement.embeddables.DemandeStockQuantityRequest;
 import com.rentalhive.stockManagement.embeddables.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
+import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
 import com.rentalhive.stockManagement.services.DemandeService;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,10 @@ public class DemandeController extends ControllerHelper {
 
         try {
             Demande demande = modelMapper.map(request.getDemandeDto(), Demande.class);
+            User user=new User();
+            user.setId(1L);
+            demande.setRenter(user);
+            demande.setDate_demande(LocalDateTime.now());
             Demande addedDemande = demandeService.addDemande(demande,request.getStockQuantities());
             AddDemandeDto addDemandeDto= modelMapper.map(addedDemande, AddDemandeDto.class);
             return new ResponseEntity<>(addDemandeDto, HttpStatus.OK);

@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface EquipmentService {
 
+
+    public Equipment findById(Long id);
+
     public List<Equipment> getAllEquipments();
 
     public Equipment addEquipment(Equipment equipment);

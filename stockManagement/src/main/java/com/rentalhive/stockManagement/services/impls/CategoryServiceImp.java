@@ -14,18 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Component
+
 public class CategoryServiceImp extends CategoryServiceHelper implements CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    public void setRepository(@Qualifier("categoryRepository") CategoryRepository categoryRepository) {
+    public CategoryServiceImp(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
-    }
-
-    public CategoryServiceImp() {
-
     }
 
     public List<Category> getAllCategorys() {

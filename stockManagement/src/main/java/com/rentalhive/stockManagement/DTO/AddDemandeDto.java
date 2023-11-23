@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @Data
 public class AddDemandeDto {
 
-    @NotNull(message = "The renter can not be null")
-    private User renter;
 
     @NotEmpty(message = "The description can not be empty")
     @NotNull(message = "The description can not be null")
@@ -24,7 +22,4 @@ public class AddDemandeDto {
 
     @NotNull(message = "The date of expiration can not be null")
     private LocalDateTime date_expiration;
-
-    @NotNull(message = "The date of demande can not be null")
-    private LocalDateTime date_demande;
 }
