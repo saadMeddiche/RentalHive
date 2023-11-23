@@ -1,7 +1,9 @@
 package com.rentalhive.stockManagement.services.impls;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.rentalhive.stockManagement.embeddables.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
@@ -89,16 +91,23 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         return demande;
     }
 
-    protected Demande validateDemandeOnUpdating(Demande demande,List<StockQuantity> stockQuantities) {
+    protected Demande validateDemandeOnUpdating(Demande demandeN,List<StockQuantity> stockQuantities) {
 
         // Inputs Validation
-        validateObject(demande);
+        validateObject(demandeN);
 
         // throwException If The ID Is Null
-        throwExceptionIfIdOfDemandeIsNull(demande);
+        throwExceptionIfIdOfDemandeIsNull(demandeN);
 
         // throwException If The Demande exist in the database (demande table)
-        throwExceptionIfTheDemandeExist(demande);
+        throwExceptionIfTheDemandeExist(demandeN);
+
+        Optional<Demande> demandeOp=demandeRepository.findById(demandeN.getId());
+        if(demandeOp.isPresent()){
+            Demande demande=demandeOp.get();
+            demande.setAccepted(demandeN.getAccepted());
+            demande.setDate_verification(LocalDateTime.now());
+            demande.setVerified_by(demandeN.getVerified_by());
 
         // throwException If The User exist in the database (user table)
         throwExceptionIfUserDoNotExist(demande);
@@ -112,6 +121,8 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         demande.setStocks(CreateStockList(stockQuantities,demande));
 
         return demande;
+        }
+        throw new DoNotExistsException("the demande you want to update doesn't exist");
     }
 
     protected void validateDemandeOnDeleting(Demande demande) {
@@ -143,7 +154,7 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
     protected void throwExceptionIfTheDemandeExist(Demande demande) {
         // throwException If The Demande exist in the database (demande table)
-        if (demandeRepository.existsById(demande.getId())) {
+        if (!demandeRepository.existsById(demande.getId())) {
             throw new DoNotExistsException("The demande does not exist");
 
         }

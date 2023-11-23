@@ -39,7 +39,7 @@ public class DemandeController extends ControllerHelper {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("/demandes")
     public ResponseEntity<?> addDemande(@RequestBody() DemandeStockQuantityRequest request) {
 
         try {
@@ -57,14 +57,17 @@ public class DemandeController extends ControllerHelper {
         }
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateDemande(@PathVariable("id") long id, @RequestBody UpdateDemandeDto demandeDto, @RequestBody List<StockQuantity> stockQuantities) {
+    @PutMapping("/demandes/{id}")
+    public ResponseEntity<?> updateDemande(@PathVariable("id") long id, @RequestBody() DemandeStockQuantityRequest request) {
 
         try {
-
-            Demande demande = modelMapper.map(demandeDto, Demande.class);
+            Demande demande = modelMapper.map(request.getDemandeDto(), Demande.class);
             demande.setId(id);
-            Demande addedDemande = demandeService.updateDemand(demande,stockQuantities);
+            User user=new User();
+            user.setId(1L);
+            demande.setVerified_by(user);
+            demande.setDate_verification(LocalDateTime.now());
+            Demande addedDemande = demandeService.updateDemand(demande,request.getStockQuantities());
             DemandeWithOutIdDto updatedDemandeDto= modelMapper.map(addedDemande, DemandeWithOutIdDto.class);
             return new ResponseEntity<>(updatedDemandeDto, HttpStatus.OK);
 
@@ -73,11 +76,10 @@ public class DemandeController extends ControllerHelper {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/demandes/{id}")
     public ResponseEntity<?> deleteDemande(@PathVariable("id") long id, @RequestBody Demande demande) {
 
         try {
-
             demande.setId(id);
             demandeService.deleteDemand(demande);
 
