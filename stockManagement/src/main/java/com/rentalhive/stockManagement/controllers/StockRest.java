@@ -20,6 +20,7 @@ public class StockRest {
     private final StockService stockService;
 
 
+
     public StockRest( StockService stockService) {
         this.stockService = stockService;
     }
