@@ -2,11 +2,7 @@ package com.rentalhive.stockManagement.entities;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -18,6 +14,7 @@ import com.rentalhive.stockManagement.embeddables.FullName;
 import com.rentalhive.stockManagement.embeddables.Password;
 
 @Entity
+@Table(name = "\"user\"")
 public class User {
 
     @Id

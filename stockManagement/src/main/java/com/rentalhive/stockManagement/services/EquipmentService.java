@@ -15,7 +15,6 @@ public interface EquipmentService {
     public Equipment updateEquipment(Equipment equipment);
 
     public void deleteEquipment(Equipment equipment);
-    public Integer countAvailableStocksForEquipment(Equipment equipment, Demande demande);
     public boolean isExist(Equipment equipment);
-    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity, Demande demande);
+
 }

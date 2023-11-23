@@ -2,7 +2,6 @@ package com.rentalhive.stockManagement.services.impls;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import com.rentalhive.stockManagement.embeddables.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
@@ -14,22 +13,32 @@ import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.DemandeRepository;
 import com.rentalhive.stockManagement.services.DemandeService;
 import com.rentalhive.stockManagement.services.EquipmentService;
+import com.rentalhive.stockManagement.services.StockService;
 import com.rentalhive.stockManagement.services.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-
 public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
+@Autowired
     final DemandeRepository demandeRepository;
 
-
+@Autowired
     final EquipmentService equipmentService ;
 
+@Autowired
+    final StockService stockService;
+
+@Autowired
     final UserService userService;
+
+    public DemandeServiceImp(DemandeRepository demandeRepository, EquipmentService equipmentService, UserService userService,StockService stockService) {
+        this.demandeRepository = demandeRepository;
+        this.equipmentService = equipmentService;
+        this.userService = userService;
+        this.stockService=stockService;
+    }
 
     @Override
     public List<Demande> getAllDemandes() {
@@ -55,26 +64,6 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
         demandeRepository.delete(demande);
     }
-    Predicate<Demande> isIdOfDemandeNull = demande -> demande.getId() == null;
-
-    Predicate<Demande> isReservationDateHigherThanExpiredDate=demande->
-            demande.getDate_reservation().isBefore(demande.getDate_expiration());
-
-    Predicate<Demande> isVerificationDateNull=demande ->
-            demande.getDate_verification()==null && demande.getVerified_by()==null;
-
-    Predicate<Demande> isDemandeAccepted= demande->!demande.getAccepted();
-
-    Predicate<Demande> isDateReservationHigherThanDemandeDate=demande -> demande.getDate_demande().isBefore(demande.getDate_reservation());
-
-    Predicate<Demande> isDateReservationHigherThanVerificationDate=demande -> demande.getDate_verification().isBefore(demande.getDate_reservation());
-
-/*    Predicate<Equipment> isEquipmentExist= equipment->equipmentService.isExist(equipment);
-
-
-    // Check If The Demande Exists
-    Predicate<Demande> isDemandeExists = demande -> demandeRepository.existsById(demande.getId());
-    */
 
     protected Demande validateDemandeOnAdding(Demande demande, List<StockQuantity> stockQuantities) {
 
@@ -141,8 +130,13 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
             Equipment equipment=new Equipment();
             equipment.setId(eS.getId());
             throwExceptionIfEquipmentDoesNotExist(equipment);
-            throwExceptionIfEquipmentQuantityDoesNotExist(equipment,eS.getQuantity(),demande);
-            stocks.addAll(equipmentService.getStocksByEquipemntQuantity(equipment, eS.getQuantity(),demande));
+            if (stockService.countAvailableStocksForEquipment(equipment)>= eS.getQuantity()) {
+                stocks.addAll(stockService.getStocksByEquipemntQuantity(equipment, eS.getQuantity(),demande));
+            }else if(stockService.countAvailableAndRentedStocksForEquipment(equipment,demande)>= eS.getQuantity()) {
+                stocks.addAll(stockService.getStocksByEquipmentQuantityRentedAndAvailable(equipment, eS.getQuantity(),demande));
+            }else{
+                throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
+            }
         });
         return stocks;
     }
@@ -164,7 +158,7 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
     protected void throwExceptionIfIdOfDemandeIsNull(Demande demande) {
         // throwException If The ID of demande Is Null
-        if (isIdOfDemandeNull.test(demande)) {
+        if (demande.getId() == null) {
             throw new ValidationException(List.of("The ID of demande can not be null"));
         }
 
@@ -172,34 +166,36 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
     protected void throwExceptionIfReservationDateHigherThanExpiredDate(Demande demande) {
 
-        if (!isReservationDateHigherThanExpiredDate.test(demande)) {
+        if (!demande.getDate_reservation().isBefore(demande.getDate_expiration())) {
             throw new ValidationException(List.of("Reservation Date is Higher Than Expiration Date"));
         }
 
     }
     protected void throwExceptionIfVerificationDateNull(Demande demande) {
 
-        if (!isVerificationDateNull.test(demande)) {
+        if (!(demande.getDate_verification()==null && demande.getVerified_by()==null)) {
             throw new ValidationException(List.of("the Verification Date need to be Null"));
         }
 
     }
     protected void throwExceptionIfDemandeAccepted(Demande demande) {
 
-        if (!isDemandeAccepted.test(demande)) {
+        if (demande.getAccepted()) {
             throw new ValidationException(List.of("The demande can't be accepted before creating it"));
         }
 
     }
     protected void throwExceptionIfDateReservationLowerThanDemandeDate(Demande demande) {
-        if (!isDateReservationHigherThanDemandeDate.test(demande)) {
+        if (!demande.getDate_demande().isBefore(demande.getDate_reservation())) {
             throw new ValidationException(List.of("The Reservation Date Lower Than Demande Date"));
         }
     }
 
     protected void throwExceptionIfEquipmentQuantityDoesNotExist(Equipment equipment,Integer quantity,Demande demande) {
-        if (equipmentService.countAvailableStocksForEquipment(equipment,demande)>=quantity) {
-            throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
+        if (!(stockService.countAvailableStocksForEquipment(equipment)>=quantity)) {
+            if(stockService.countAvailableAndRentedStocksForEquipment(equipment,demande)<quantity) {
+                throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
+            }
         }
     }
 
@@ -209,7 +205,7 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         }
     }
     protected void throwExceptionIfDateReservationLowerThanVerificationDate(Demande demande){
-        if (!isDateReservationHigherThanVerificationDate.test(demande)) {
+        if (!demande.getDate_verification().isBefore(demande.getDate_reservation())) {
             throw new ValidationException(List.of("Reservation Date is Lower Than The Verification Date"));
         }
     }

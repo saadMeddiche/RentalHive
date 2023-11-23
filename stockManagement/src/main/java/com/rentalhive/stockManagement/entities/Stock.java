@@ -29,10 +29,16 @@ public class Stock {
     @NotBlank(message = "the registration number can't be blank")
     private String registrationNumber;
     @ManyToMany(mappedBy = "stocks")
-    @JoinTable(name = "demande_stock",
-            joinColumns = @JoinColumn(name = "demande_id"),
-            inverseJoinColumns = @JoinColumn(name = "stock_id"))
     private List<Demande> demandes;
+
+    public List<Demande> getDemandes() {
+        return demandes;
+    }
+
+    public void setDemandes(List<Demande> demandes) {
+        this.demandes = demandes;
+    }
+
     public Stock() {
     }
 

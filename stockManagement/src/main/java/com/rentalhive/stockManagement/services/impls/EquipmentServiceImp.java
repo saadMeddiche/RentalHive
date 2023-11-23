@@ -71,9 +71,7 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
     }
 
 
-    public Integer countAvailableStocksForEquipment(Equipment equipment, Demande demande){
-        return equipmentRepository.CountStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration());
-    }
+
 
 
     public boolean isExist(Equipment equipment){
@@ -81,9 +79,6 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         return equipmentRepository.existsById(equipment.getId());
     }
 
-    public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity, Demande demande){
-        Pageable pageable = PageRequest.of(0, quantity);
-        return equipmentRepository.findStocksWithSpecificEquipmentAndDemandConditions(equipment,demande.getDate_reservation(),demande.getDate_expiration(), pageable);
-    }
+
 
 }

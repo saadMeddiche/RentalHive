@@ -18,7 +18,7 @@ import java.util.List;
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
     Boolean existsByNameAndCategory(String name, Category category);
 
-    @Query("SELECT s FROM Stock s " +
+/*    @Query("SELECT s FROM Stock s " +
             "LEFT JOIN FETCH s.demandes d " +
             "WHERE s.equipment = :equipment " +
             "AND (d IS EMPTY OR " +
@@ -37,7 +37,7 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
             @Param("equipment") Equipment equipment,
             @Param("endDate") LocalDateTime endDate,
             @Param("givenDate") LocalDateTime givenDate
-    );
+    );*/
 
 
 }
