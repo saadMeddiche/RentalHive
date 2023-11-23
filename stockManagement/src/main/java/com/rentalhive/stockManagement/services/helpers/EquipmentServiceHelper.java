@@ -89,7 +89,7 @@ public class EquipmentServiceHelper extends ServiceHelper {
         // throwException If The ID Is Null
         throwExceptionIfIdOfEquipmentIsNull(equipment);
 
-        // throwException If The Equipment exist in the database (equipment table)
+        // throwException If The Equipment do not exist in the database (equipment table)
         throwExceptionIfTheEquipmentDoNotExist(equipment);
 
         // throwException If The User exist in the database (user table)

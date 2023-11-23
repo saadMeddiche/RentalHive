@@ -68,7 +68,6 @@ public class EquipmentController extends ControllerHelper {
             return new ResponseEntity<>(addedEquipment, HttpStatus.OK);
 
         } catch (Exception e) {
-
             return getResponseEntityDependingOnException(e);
         }
     }
