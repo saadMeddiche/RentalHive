@@ -3,6 +3,8 @@ package com.rentalhive.stockManagement.controllers;
 import java.util.List;
 
 import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentUpdateDto;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,12 +31,9 @@ import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentAddDto;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
-
 public class EquipmentController extends ControllerHelper {
 
     private final EquipmentService equipmentService;
-
     private final EquipmentConverter equipmentConverter;
 
     public EquipmentController(EquipmentService equipmentService , EquipmentConverter equipmentConverter){
@@ -63,7 +62,6 @@ public class EquipmentController extends ControllerHelper {
         try {
 
             Equipment equipment = equipmentConverter.convertToEntity(equipmentAddDto);
-
 
             Equipment addedEquipment = equipmentService.addEquipment(equipment);
 
