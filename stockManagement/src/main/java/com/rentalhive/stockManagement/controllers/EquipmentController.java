@@ -45,11 +45,9 @@ public class EquipmentController extends ControllerHelper {
     public ResponseEntity<?> getAllEquipments() {
 
         try {
-
             List<Equipment> equipments = equipmentService.getAllEquipments();
 
             return new ResponseEntity<>(equipments, HttpStatus.OK);
-
         } catch (Exception e) {
             return getResponseEntityDependingOnException(e);
         }
