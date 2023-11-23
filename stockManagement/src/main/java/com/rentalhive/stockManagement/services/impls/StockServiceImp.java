@@ -1,5 +1,6 @@
 package com.rentalhive.stockManagement.services.impls;
 
+import com.rentalhive.stockManagement.DTO.StockDTO;
 import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.repositories.StockRepository;

@@ -22,4 +22,11 @@ public class Status {
     @NotNull(message = "The name of status can not be null")
     @NotBlank(message = "The name of status can not be blank")
     private String name;
+
+    public Status(){}
+
+    public Status(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
