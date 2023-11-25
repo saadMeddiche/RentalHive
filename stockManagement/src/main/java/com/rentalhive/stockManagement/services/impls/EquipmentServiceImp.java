@@ -72,4 +72,8 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         equipmentRepository.delete(equipment);
 
     }
+
+    public Optional<Equipment> findEquipmentById(Long id){
+        return equipmentRepository.findById(id);
+    }
 }
