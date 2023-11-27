@@ -15,19 +15,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/stock")
+@RequestMapping("/api")
 public class StockRestController extends ControllerHelper {
     private final StockService stockService;
-
-
 
     public StockRestController(StockService stockService) {
         this.stockService = stockService;
     }
 
-
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@ModelAttribute @Valid StockDTO stockDTO){
+    @PostMapping("/stocks")
+    public ResponseEntity<?> save(@RequestBody @Valid StockDTO stockDTO){
         try{
             Stock stock=convertToEntity(stockDTO);
             Stock addedStock= stockService.addStock(stock);
@@ -35,13 +32,10 @@ public class StockRestController extends ControllerHelper {
             return new ResponseEntity<>(addedStockDTO, HttpStatus.OK);
         }catch(Exception e){
             return getResponseEntityDependingOnException(e);
-/*
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
-*/
         }
     }
 
-    @GetMapping("/")
+    @GetMapping("/stocks")
     public ResponseEntity<?> findAll() {
         try{
             List<Stock> stockList= stockService.getAllStocks();
@@ -53,8 +47,8 @@ public class StockRestController extends ControllerHelper {
         }
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateStock(@PathVariable("id") long id, @ModelAttribute StockDTO stockDTO) {
+    @PutMapping("/stocks/{id}")
+    public ResponseEntity<?> updateStock(@PathVariable("id") long id, @RequestBody StockDTO stockDTO) {
         try{
             Stock stock = convertToEntity(stockDTO);
             stock.setId(id);
@@ -68,7 +62,7 @@ public class StockRestController extends ControllerHelper {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/stocks/{id}")
     public ResponseEntity<?> deleteStock(@PathVariable("id") long id) {
         try{
             stockService.deleteStock(id);
