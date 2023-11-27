@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/RentalHive/Api/Demande")
+@RequestMapping("/api")
 @AllArgsConstructor
 public class DemandeController extends ControllerHelper {
 
@@ -43,6 +43,8 @@ public class DemandeController extends ControllerHelper {
 
         try {
             Demande demande = modelMapper.map(request.getDemandeDto(), Demande.class);
+
+
             User user=new User();
             user.setId(1L);
             demande.setRenter(user);

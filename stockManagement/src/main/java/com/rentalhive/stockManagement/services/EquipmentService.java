@@ -21,8 +21,6 @@ public interface EquipmentService {
     public void deleteEquipment(Equipment equipment);
     public boolean isExist(Equipment equipment);
 
-
-    public Equipment findById(Long id);
     public Optional<Equipment> findEquipmentById(Long id);
 
 }

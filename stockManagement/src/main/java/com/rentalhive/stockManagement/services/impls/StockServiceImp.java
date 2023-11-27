@@ -11,6 +11,7 @@ import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.exceptions.costums.AlreadyExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
+import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.StockRepository;
 import com.rentalhive.stockManagement.services.EquipmentService;
@@ -122,6 +123,10 @@ public class StockServiceImp extends ServiceHelper implements StockService {
         }
 
         stockRepository.deleteById(id);
+    }
+
+    public void deleteStock(Stock stock){
+        throw  new ValidationException(List.of("deleteStock(Stock stock) has been used"));
     }
 
 
