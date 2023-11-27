@@ -1,7 +1,7 @@
 /*
 package com.rentalhive.stockManagement.Convert;
 
-import com.rentalhive.stockManagement.DTO.AddDemandeDto;
+import com.rentalhive.stockManagement.DTO.DemandeDto.AddDemandeDto;
 import com.rentalhive.stockManagement.entities.Demande;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;

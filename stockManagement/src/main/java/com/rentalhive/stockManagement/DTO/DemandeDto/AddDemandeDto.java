@@ -1,6 +1,5 @@
-package com.rentalhive.stockManagement.DTO;
+package com.rentalhive.stockManagement.DTO.DemandeDto;
 
-import com.rentalhive.stockManagement.entities.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

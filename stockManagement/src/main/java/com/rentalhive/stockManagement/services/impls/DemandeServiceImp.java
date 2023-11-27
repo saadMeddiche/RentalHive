@@ -17,30 +17,21 @@ import com.rentalhive.stockManagement.services.DemandeService;
 import com.rentalhive.stockManagement.services.EquipmentService;
 import com.rentalhive.stockManagement.services.StockService;
 import com.rentalhive.stockManagement.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
-@Autowired
     final DemandeRepository demandeRepository;
 
-@Autowired
     final EquipmentService equipmentService ;
 
-@Autowired
     final StockService stockService;
 
-@Autowired
     final UserService userService;
 
-    public DemandeServiceImp(DemandeRepository demandeRepository, EquipmentService equipmentService, UserService userService,StockService stockService) {
-        this.demandeRepository = demandeRepository;
-        this.equipmentService = equipmentService;
-        this.userService = userService;
-        this.stockService=stockService;
-    }
 
     @Override
     public List<Demande> getAllDemandes() {
@@ -71,10 +62,6 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
         // Inputs Validation
         validateObject(demande);
-
-        // throwException If The ID Is Null
-        throwExceptionIfIdOfDemandeIsNull(demande);
-
         // throwException If The User exist in the database (user table)
         throwExceptionIfUserDoNotExist(demande);
 
@@ -137,16 +124,22 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
 
     protected List<Stock> CreateStockList(List<StockQuantity> stockQuantities, Demande demande){
         List<Stock> stocks=new ArrayList<>();
+        List<Long> ids=new ArrayList<>();
         stockQuantities.forEach(eS->{
-            Equipment equipment=new Equipment();
-            equipment.setId(eS.getId());
-            throwExceptionIfEquipmentDoesNotExist(equipment);
-            if (stockService.countAvailableStocksForEquipment(equipment)>= eS.getQuantity()) {
-                stocks.addAll(stockService.getStocksByEquipemntQuantity(equipment, eS.getQuantity(),demande));
-            }else if(stockService.countAvailableAndRentedStocksForEquipment(equipment,demande)>= eS.getQuantity()) {
-                stocks.addAll(stockService.getStocksByEquipmentQuantityRentedAndAvailable(equipment, eS.getQuantity(),demande));
-            }else{
-                throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
+            Long id= eS.getId();
+            Integer quantity= eS.getQuantity();
+            if(!ids.contains(id)) {
+                ids.add(id);
+                Equipment equipment = new Equipment();
+                equipment.setId(id);
+                throwExceptionIfEquipmentDoesNotExist(equipment);
+                if (stockService.countAvailableStocksForEquipment(equipment) >= quantity) {
+                    stocks.addAll(stockService.getStocksByEquipemntQuantity(equipment, quantity, demande));
+                } else if (stockService.countAvailableAndRentedStocksForEquipment(equipment, demande) >= quantity) {
+                    stocks.addAll(stockService.getStocksByEquipmentQuantityRentedAndAvailable(equipment, quantity, demande));
+                } else {
+                    throw new ValidationException(List.of("Our stock can't provide you with the quantity your asking for"));
+                }
             }
         });
         return stocks;
