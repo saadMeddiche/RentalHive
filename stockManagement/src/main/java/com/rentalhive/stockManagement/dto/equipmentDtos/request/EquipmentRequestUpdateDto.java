@@ -1,25 +1,23 @@
-package com.rentalhive.stockManagement.dto.equipmentDtos;
+package com.rentalhive.stockManagement.dto.equipmentDtos.request;
+
+import com.rentalhive.stockManagement.entities.Equipment;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public class EquipmentUpdateDto {
+public class EquipmentRequestUpdateDto {
 
-    @NotBlank(message = "The name of equipment can not be empty")
-    @NotNull(message = "The name of equipment can not be null")
-    private String name;
+    protected String name;
 
-    @Positive(message = "The rent can not be negative or zero")
-    private Double price_per_day;
+    protected Double price_per_day;
 
-    @NotNull(message = "The id of category of the equipment can not be null")
-    private Long category_Id;
+    protected Long category_Id;
 
-    public EquipmentUpdateDto() {
+    public EquipmentRequestUpdateDto() {
     }
 
-    public EquipmentUpdateDto(String name, Double price_per_day, Long category_Id) {
+    public EquipmentRequestUpdateDto(String name, Double price_per_day, Long category_Id) {
         this.name = name;
         this.price_per_day = price_per_day;
         this.category_Id = category_Id;
@@ -57,4 +55,5 @@ public class EquipmentUpdateDto {
                 ", category_Id='" + getCategory_Id() + "'" +
                 "}";
     }
+
 }

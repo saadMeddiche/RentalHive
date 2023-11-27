@@ -1,5 +1,6 @@
 package com.rentalhive.stockManagement.converters;
 
+import com.rentalhive.stockManagement.dto.equipmentDtos.response.EquipmentResponseDto;
 import com.rentalhive.stockManagement.entities.Equipment;
 
 import com.rentalhive.stockManagement.entities.User;
@@ -8,22 +9,14 @@ import com.rentalhive.stockManagement.services.UserService;
 
 import com.rentalhive.stockManagement.services.EquipmentService;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentAddDto;
-import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentUpdateDto;
-
-import com.rentalhive.stockManagement.services.impls.UserServiceImp;
+import com.rentalhive.stockManagement.dto.equipmentDtos.request.EquipmentRequestAddDto;
+import com.rentalhive.stockManagement.dto.equipmentDtos.request.EquipmentRequestUpdateDto;
 
 import com.rentalhive.stockManagement.entities.Category;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EquipmentConverter {
-
-
 
     public final UserService userservice;
 
@@ -38,7 +31,7 @@ public class EquipmentConverter {
     }
 
 
-    public Equipment convertToEntity(EquipmentAddDto equipmentAddDto) {
+    public Equipment convertToEntity(EquipmentRequestAddDto equipmentAddDto) {
 
         User user = userservice.findById(equipmentAddDto.getAdded_by_id());
 
@@ -52,10 +45,9 @@ public class EquipmentConverter {
         equipment.setCategory(category);
 
         return equipment;
-
     }
 
-    public Equipment convertToEntity(EquipmentUpdateDto equipmentUpdateDto, Long EquipmentId) {
+    public Equipment convertToEntity(EquipmentRequestUpdateDto equipmentUpdateDto, Long EquipmentId) {
 
         Category category = categoryService.findById(equipmentUpdateDto.getCategory_Id());
 
@@ -68,4 +60,19 @@ public class EquipmentConverter {
         return equipment;
 
     }
+
+    public static EquipmentResponseDto convertToDto(Equipment equipment){
+
+        EquipmentResponseDto equipmentResponseDto = new EquipmentResponseDto();
+
+        equipmentResponseDto.setName(equipment.getName());
+
+        equipmentResponseDto.setPrice_per_day(equipment.getPrice_per_day());
+
+        equipmentResponseDto.setCategory_response_dto(CategoryConverter.convertToDto(equipment.getCategory()));
+
+        return equipmentResponseDto;
+
+    }
+
 }
