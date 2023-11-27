@@ -7,19 +7,18 @@ import com.rentalhive.stockManagement.entities.User;
 public class StockDTO {
     private String registrationNumber;
 
-    private Status status; //I don't take the status but I give it to the user
 
-    private User added_by;
-    private Equipment equipment;
+    private Long added_by_id;
+    private Long equipment_id;
 
 
     public StockDTO() {
     }
 
-    public StockDTO(String registrationNumber, User added_by, Equipment equipment) {
+    public StockDTO(String registrationNumber, Long added_by_id, Long equipment_id) {
         this.registrationNumber = registrationNumber;
-        this.added_by = added_by;
-        this.equipment = equipment;
+        this.added_by_id = added_by_id;
+        this.equipment_id = equipment_id;
     }
 
     public String getRegistrationNumber() {
@@ -30,23 +29,20 @@ public class StockDTO {
         this.registrationNumber = registrationNumber;
     }
 
-    public User getAdded_by() {
-        return added_by;
+    public Long getAdded_by_id() {
+        return added_by_id;
     }
 
-    public void setAdded_by(User added_by) {
-        this.added_by = added_by;
+    public void setAdded_by_id(Long added_by_id) {
+        this.added_by_id = added_by_id;
     }
 
-    public Equipment getEquipment() {
-        return equipment;
+    public Long getEquipment_id() {
+        return equipment_id;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
+    public void setEquipment_id(Long equipment_id) {
+        this.equipment_id = equipment_id;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }
