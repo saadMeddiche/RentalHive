@@ -46,8 +46,8 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
     }
 
     @Override
-    public Demande updateDemand(Demande demande, List<StockQuantity> stockQuantities) {
-        Demande Ndemande=validateDemandeOnUpdating(demande,stockQuantities);
+    public Demande updateDemand(Demande demande) {
+        Demande Ndemande=validateDemandeOnUpdating(demande);
         return demandeRepository.save(Ndemande);
     }
 
@@ -78,10 +78,10 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         return demande;
     }
 
-    protected Demande validateDemandeOnUpdating(Demande demandeN,List<StockQuantity> stockQuantities) {
+    protected Demande validateDemandeOnUpdating(Demande demandeN) {
 
-        // Inputs Validation
-        validateObject(demandeN);
+/*        // Inputs Validation
+        validateObject(demandeN);*/
 
         // throwException If The ID Is Null
         throwExceptionIfIdOfDemandeIsNull(demandeN);
@@ -104,8 +104,6 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         throwExceptionIfDateReservationLowerThanDemandeDate(demande);
 
         throwExceptionIfDateReservationLowerThanVerificationDate(demande);
-
-        demande.setStocks(CreateStockList(stockQuantities,demande));
 
         return demande;
         }

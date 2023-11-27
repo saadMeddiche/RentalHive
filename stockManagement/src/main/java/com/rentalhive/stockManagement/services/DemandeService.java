@@ -11,7 +11,7 @@ public interface DemandeService {
 
     public Demande addDemande(Demande demande, List<StockQuantity> stockQuantities );
 
-    public Demande updateDemand(Demande demande,List<StockQuantity> StockQuantity);
+    public Demande updateDemand(Demande demande);
 
     public void deleteDemand(Demande demande);
 }

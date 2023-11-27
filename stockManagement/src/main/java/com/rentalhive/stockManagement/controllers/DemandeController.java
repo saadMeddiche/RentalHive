@@ -2,7 +2,8 @@ package com.rentalhive.stockManagement.controllers;
 
 import com.rentalhive.stockManagement.DTO.DemandeDto.AddDemandeDto;
 import com.rentalhive.stockManagement.DTO.DemandeDto.DemandeWithOutIdDto;
-import com.rentalhive.stockManagement.embeddables.DemandeStockQuantityRequest;
+import com.rentalhive.stockManagement.DTO.DemandeDto.DemandeStockQuantityRequest;
+import com.rentalhive.stockManagement.DTO.DemandeDto.UpdateDemandeDto;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
@@ -56,17 +57,17 @@ public class DemandeController extends ControllerHelper {
     }
 
     @PutMapping("/demandes/{id}")
-    public ResponseEntity<?> updateDemande(@PathVariable("id") long id, @RequestBody() DemandeStockQuantityRequest request) {
+    public ResponseEntity<?> updateDemande(@PathVariable("id") long id, @RequestBody()UpdateDemandeDto demandeDto) {
 
         try {
-            Demande demande = modelMapper.map(request.getDemandeDto(), Demande.class);
+            Demande demande = modelMapper.map(demandeDto, Demande.class);
             demande.setId(id);
             User user=new User();
             user.setId(1L);
             demande.setVerified_by(user);
             demande.setDate_verification(LocalDateTime.now());
-            Demande addedDemande = demandeService.updateDemand(demande,request.getStockQuantities());
-            DemandeWithOutIdDto updatedDemandeDto= modelMapper.map(addedDemande, DemandeWithOutIdDto.class);
+            Demande addedDemande = demandeService.updateDemand(demande);
+            UpdateDemandeDto updatedDemandeDto= modelMapper.map(addedDemande, UpdateDemandeDto.class);
             return new ResponseEntity<>(updatedDemandeDto, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -75,9 +76,10 @@ public class DemandeController extends ControllerHelper {
     }
 
     @DeleteMapping("/demandes/{id}")
-    public ResponseEntity<?> deleteDemande(@PathVariable("id") long id, @RequestBody Demande demande) {
+    public ResponseEntity<?> deleteDemande(@PathVariable("id") long id) {
 
         try {
+            Demande demande=new Demande();
             demande.setId(id);
             demandeService.deleteDemand(demande);
 
