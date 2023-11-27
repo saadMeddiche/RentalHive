@@ -5,6 +5,7 @@ import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Stock;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EquipmentService {
 
@@ -19,5 +20,9 @@ public interface EquipmentService {
 
     public void deleteEquipment(Equipment equipment);
     public boolean isExist(Equipment equipment);
+
+
+    public Equipment findById(Long id);
+    public Optional<Equipment> findEquipmentById(Long id);
 
 }

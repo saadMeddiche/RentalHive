@@ -78,13 +78,9 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
 
     }
 
-    public Optional<Equipment> findById(long id){
+    public Optional<Equipment> findEquipmentById(Long id){
         return equipmentRepository.findById(id);
     }
-
-
-
-
 
     public boolean isExist(Equipment equipment){
 

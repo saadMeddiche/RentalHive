@@ -16,7 +16,9 @@ import java.util.Optional;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
-    Optional<Stock> findByRegistrationNumber(String registrationNumber);
+
+   Optional<Stock> findByRegistrationNumber(String registrationNumber);
+
     List<Stock> findByEquipmentAndStatusName(Equipment equipment, String statusName,Pageable pageable);
     List<Stock> findByEquipmentAndStatusName(Equipment equipment, String statusName);
     Integer  countByEquipmentAndStatusName(Equipment equipment, String statusName);
@@ -37,4 +39,5 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
              LocalDateTime endDate,
              LocalDateTime givenDate
     );*/
+
 }

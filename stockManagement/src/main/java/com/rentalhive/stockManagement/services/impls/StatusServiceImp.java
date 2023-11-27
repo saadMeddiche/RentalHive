@@ -32,4 +32,9 @@ public class StatusServiceImp implements StatusService {
     public void deleteStatus(Status status) {
 
     }
+
+    @Override
+    public Optional<Status> findStatusById(Long id) {
+        return statusRepository.findById(id);
+    }
 }

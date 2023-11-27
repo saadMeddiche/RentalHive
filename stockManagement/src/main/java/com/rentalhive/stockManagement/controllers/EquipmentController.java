@@ -1,33 +1,22 @@
 package com.rentalhive.stockManagement.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentUpdateDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.rentalhive.stockManagement.dto.equipmentDtos.request.EquipmentRequestUpdateDto;
+import com.rentalhive.stockManagement.dto.equipmentDtos.response.EquipmentResponseDto;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
 import com.rentalhive.stockManagement.services.EquipmentService;
 import com.rentalhive.stockManagement.converters.EquipmentConverter;
 
-import com.rentalhive.stockManagement.dto.equipmentDtos.EquipmentAddDto;
+import com.rentalhive.stockManagement.dto.equipmentDtos.request.EquipmentRequestAddDto;
 
 @RestController
 @RequestMapping("/api")
@@ -45,10 +34,11 @@ public class EquipmentController extends ControllerHelper {
     public ResponseEntity<?> getAllEquipments() {
 
         try {
-
             List<Equipment> equipments = equipmentService.getAllEquipments();
 
-            return new ResponseEntity<>(equipments, HttpStatus.OK);
+            List<EquipmentResponseDto> listOfEquipmentResponseDtos = equipments.stream().map(EquipmentConverter::convertToDto).collect(Collectors.toList());
+
+            return new ResponseEntity<>(listOfEquipmentResponseDtos, HttpStatus.OK);
 
         } catch (Exception e) {
             return getResponseEntityDependingOnException(e);
@@ -57,7 +47,7 @@ public class EquipmentController extends ControllerHelper {
     }
 
     @PostMapping("/equipments")
-    public ResponseEntity<?> addEquipment(@ModelAttribute EquipmentAddDto equipmentAddDto) {
+    public ResponseEntity<?> addEquipment(@RequestBody EquipmentRequestAddDto equipmentAddDto) {
 
         try {
 
@@ -65,7 +55,9 @@ public class EquipmentController extends ControllerHelper {
 
             Equipment addedEquipment = equipmentService.addEquipment(equipment);
 
-            return new ResponseEntity<>(addedEquipment, HttpStatus.OK);
+            EquipmentResponseDto equipmentResponseDto = EquipmentConverter.convertToDto(addedEquipment);
+
+            return new ResponseEntity<>(equipmentResponseDto, HttpStatus.OK);
 
         } catch (Exception e) {
             return getResponseEntityDependingOnException(e);
@@ -73,15 +65,17 @@ public class EquipmentController extends ControllerHelper {
     }
 
     @PutMapping("/equipments/{id}")
-    public ResponseEntity<?> updateEquipment(@PathVariable("id") long id, @ModelAttribute EquipmentUpdateDto equipmentUpdateDto) {
+    public ResponseEntity<?> updateEquipment(@PathVariable("id") long id, @RequestBody EquipmentRequestUpdateDto equipmentUpdateDto) {
 
         try {
 
             Equipment equipment = equipmentConverter.convertToEntity(equipmentUpdateDto , id);
 
-            Equipment addedEquipment = equipmentService.updateEquipment(equipment);
+            Equipment updatedEquipment = equipmentService.updateEquipment(equipment);
 
-            return new ResponseEntity<>(addedEquipment, HttpStatus.OK);
+            EquipmentResponseDto equipmentResponseDto = EquipmentConverter.convertToDto(updatedEquipment);
+
+            return new ResponseEntity<>(equipmentResponseDto, HttpStatus.OK);
 
         } catch (Exception e) {
             return getResponseEntityDependingOnException(e);

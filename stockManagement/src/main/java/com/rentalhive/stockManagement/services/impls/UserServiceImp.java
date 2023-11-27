@@ -49,4 +49,8 @@ public class UserServiceImp extends UserServiceHelper implements UserService {
     public boolean isExists(User user) {
         return userRepository.existsById(user.getId());
     }
+
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
 }

@@ -19,4 +19,6 @@ public interface UserService {
     public User findById(Long id);
 
     public boolean isExists(User user);
+    public Optional<User> findUserById(Long id);
+
 }
