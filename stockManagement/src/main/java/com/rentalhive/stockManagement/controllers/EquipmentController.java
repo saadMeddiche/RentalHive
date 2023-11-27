@@ -3,8 +3,10 @@ package com.rentalhive.stockManagement.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 import com.rentalhive.stockManagement.dto.equipmentDtos.request.EquipmentRequestUpdateDto;
 import com.rentalhive.stockManagement.dto.equipmentDtos.response.EquipmentResponseDto;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

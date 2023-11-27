@@ -1,6 +1,9 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Equipment;import com.rentalhive.stockManagement.entities.User;
+import com.rentalhive.stockManagement.entities.Demande;
+import com.rentalhive.stockManagement.entities.Equipment;
+import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.repositories.EquipmentRepository;
 import com.rentalhive.stockManagement.services.CategoryService;
 import com.rentalhive.stockManagement.services.EquipmentService;
@@ -9,6 +12,8 @@ import com.rentalhive.stockManagement.services.helpers.EquipmentServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,4 +81,12 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
     public Optional<Equipment> findEquipmentById(Long id){
         return equipmentRepository.findById(id);
     }
+
+    public boolean isExist(Equipment equipment){
+
+        return equipmentRepository.existsById(equipment.getId());
+    }
+
+
+
 }
