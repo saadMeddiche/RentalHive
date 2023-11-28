@@ -8,4 +8,5 @@ public class StockQuantity {
     private Integer quantity;
 
     private Long equipmentId;
+
 }

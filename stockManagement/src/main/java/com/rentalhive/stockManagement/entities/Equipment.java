@@ -23,6 +23,7 @@ public class Equipment {
     private String name;
 
     @Positive(message = "The rent can not be negative or zero")
+    @NotNull(message = "The price per day of equipment can not be null")
     private Double price_per_day;
 
     @NotNull(message = "The user that added the equipment can not be null")
