@@ -1,17 +1,12 @@
 package com.rentalhive.stockManagement.services.impls;
 
-import com.rentalhive.stockManagement.DTO.ContractDto.StockQuantity;
-import com.rentalhive.stockManagement.entities.Contract;
-import com.rentalhive.stockManagement.entities.Contract;
-import com.rentalhive.stockManagement.entities.Contract;
 import com.rentalhive.stockManagement.entities.Contract;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
 import com.rentalhive.stockManagement.repositories.ContractRepository;
 import com.rentalhive.stockManagement.services.ContractService;
-import com.rentalhive.stockManagement.services.ContractService;
+import com.rentalhive.stockManagement.services.DevisService;
 import com.rentalhive.stockManagement.services.UserService;
-import com.rentalhive.stockManagement.services.helpers.ContractServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +20,8 @@ import java.util.Optional;
 public class ContractServiceImp extends ServiceHelper implements ContractService {
 
      final ContractRepository contractRepository;
-     final DevisService devisService;
      final UserService userService;
+     final DevisService devisService;
 
 
     public List<Contract> getAllContracts() {
@@ -73,7 +68,7 @@ public class ContractServiceImp extends ServiceHelper implements ContractService
         }
     }
     protected void throwExceptionIfDevisDoNotExist(Contract contract) {
-        if (!DevisService.existsById(contract.getDevis())) {
+        if (!devisService.isExist(contract.getDevis())) {
             throw new DoNotExistsException("The devis does not exist");
         }
     }

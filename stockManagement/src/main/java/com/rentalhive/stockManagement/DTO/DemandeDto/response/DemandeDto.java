@@ -1,9 +1,11 @@
-package com.rentalhive.stockManagement.DTO.DemandeDto;
+package com.rentalhive.stockManagement.DTO.DemandeDto.response;
 import com.rentalhive.stockManagement.Enum.DemandeStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.rentalhive.stockManagement.dto.DemandeDto.StockDto;
 
 @Data
 public class DemandeDto {

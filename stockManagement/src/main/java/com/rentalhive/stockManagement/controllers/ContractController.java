@@ -1,13 +1,9 @@
 package com.rentalhive.stockManagement.controllers;
 
 import com.rentalhive.stockManagement.DTO.ContractDto;
-import com.rentalhive.stockManagement.DTO.ContractDto.ContractDto;
-import com.rentalhive.stockManagement.DTO.ContractDto.ContractStockQuantityRequest;
-import com.rentalhive.stockManagement.DTO.ContractDto.UpdateContractDto;
 import com.rentalhive.stockManagement.entities.Contract;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
-import com.rentalhive.stockManagement.services.ContractService;
 import com.rentalhive.stockManagement.services.ContractService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

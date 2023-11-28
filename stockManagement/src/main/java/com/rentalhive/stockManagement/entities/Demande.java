@@ -30,7 +30,7 @@ public class Demande {
 
     private Boolean accepted=false;
 
-    private DemandeStatus status=DemandeStatus.PENDING;
+    private DemandeStatus status= DemandeStatus.PENDING;
 
     public DemandeStatus getStatus() {
         return status;

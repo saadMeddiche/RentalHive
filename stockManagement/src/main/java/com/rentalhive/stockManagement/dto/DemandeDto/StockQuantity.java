@@ -1,4 +1,4 @@
-package com.rentalhive.stockManagement.DTO.DemandeDto;
+package com.rentalhive.stockManagement.dto.DemandeDto;
 
 import lombok.Data;
 
@@ -8,4 +8,5 @@ public class StockQuantity {
     private Integer quantity;
 
     private Long equipmentId;
+
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.rentalhive.stockManagement.DTO.DemandeDto.StockQuantity;
+import com.rentalhive.stockManagement.dto.DemandeDto.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Stock;

@@ -1,11 +1,9 @@
-package com.rentalhive.stockManagement.DTO.DemandeDto;
+package com.rentalhive.stockManagement.DTO.DemandeDto.response;
 
 import com.rentalhive.stockManagement.entities.Stock;
 import com.rentalhive.stockManagement.entities.User;
 import lombok.Data;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
