@@ -124,7 +124,7 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         List<Stock> stocks=new ArrayList<>();
         List<Long> ids=new ArrayList<>();
         stockQuantities.forEach(eS->{
-            Long id= eS.getId();
+            Long id= eS.getEquipmentId();
             Integer quantity= eS.getQuantity();
             if(!ids.contains(id)) {
                 ids.add(id);

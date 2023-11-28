@@ -43,8 +43,9 @@ public class Discount {
         return discount.toString();
     }
 
-//    public Double getDiscountPrefix(){
-//    }
+    public Double getDiscountPrefix(){
+        return this.percentage / 100;
+    }
 
 
     @Override
