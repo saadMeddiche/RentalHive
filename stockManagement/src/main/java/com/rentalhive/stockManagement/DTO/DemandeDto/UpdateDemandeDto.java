@@ -1,5 +1,6 @@
 package com.rentalhive.stockManagement.DTO.DemandeDto;
 
+import com.rentalhive.stockManagement.Enum.DemandeStatus;
 import com.rentalhive.stockManagement.entities.User;
 import lombok.Data;
 
@@ -14,4 +15,6 @@ public class UpdateDemandeDto {
     private Boolean accepted;
 
     private String description;
+
+    private DemandeStatus status;
 }

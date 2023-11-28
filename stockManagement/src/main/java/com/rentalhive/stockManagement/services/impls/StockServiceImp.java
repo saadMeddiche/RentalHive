@@ -147,7 +147,6 @@ public class StockServiceImp extends ServiceHelper implements StockService {
     }
     public Integer countAvailableStocksForEquipment(Equipment equipment){
         return stockRepository.countByEquipmentAndStatusName(equipment, "Available");
-
     }
     public List<Stock> getStocksByEquipemntQuantity(Equipment equipment, Integer quantity, Demande demande){
         Pageable pageable = PageRequest.of(0, quantity);
