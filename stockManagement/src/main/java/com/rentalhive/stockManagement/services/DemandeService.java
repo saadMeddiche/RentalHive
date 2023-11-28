@@ -2,7 +2,7 @@ package com.rentalhive.stockManagement.services;
 
 import java.util.List;
 
-import com.rentalhive.stockManagement.DTO.DemandeDto.StockQuantity;
+import com.rentalhive.stockManagement.dto.DemandeDto.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
 
 public interface DemandeService {

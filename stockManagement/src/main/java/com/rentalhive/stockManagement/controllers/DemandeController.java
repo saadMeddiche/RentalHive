@@ -1,9 +1,8 @@
 package com.rentalhive.stockManagement.controllers;
 
-import com.rentalhive.stockManagement.DTO.DemandeDto.AddDemandeDto;
-import com.rentalhive.stockManagement.DTO.DemandeDto.DemandeWithOutIdDto;
-import com.rentalhive.stockManagement.DTO.DemandeDto.DemandeStockQuantityRequest;
-import com.rentalhive.stockManagement.DTO.DemandeDto.UpdateDemandeDto;
+import com.rentalhive.stockManagement.dto.DemandeDto.AddDemandeDto;
+import com.rentalhive.stockManagement.dto.DemandeDto.DemandeStockQuantityRequest;
+import com.rentalhive.stockManagement.dto.DemandeDto.UpdateDemandeDto;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
