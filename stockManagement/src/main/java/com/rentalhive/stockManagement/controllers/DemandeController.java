@@ -1,8 +1,8 @@
 package com.rentalhive.stockManagement.controllers;
 
-import com.rentalhive.stockManagement.dto.DemandeDto.AddDemandeDto;
+import com.rentalhive.stockManagement.dto.DemandeDto.*;
+import com.rentalhive.stockManagement.dto.DemandeDto.DemandeDto;
 import com.rentalhive.stockManagement.dto.DemandeDto.DemandeStockQuantityRequest;
-import com.rentalhive.stockManagement.dto.DemandeDto.UpdateDemandeDto;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
@@ -49,7 +49,7 @@ public class DemandeController extends ControllerHelper {
             demande.setRenter(user);
             demande.setDate_demande(LocalDateTime.now());
             Demande addedDemande = demandeService.addDemande(demande,request.getStockQuantities());
-            AddDemandeDto addDemandeDto= modelMapper.map(addedDemande, AddDemandeDto.class);
+            DemandeDto addDemandeDto= modelMapper.map(addedDemande, DemandeDto.class);
             return new ResponseEntity<>(addDemandeDto, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class DemandeController extends ControllerHelper {
             demande.setVerified_by(user);
             demande.setDate_verification(LocalDateTime.now());
             Demande addedDemande = demandeService.updateDemand(demande);
-            UpdateDemandeDto updatedDemandeDto= modelMapper.map(addedDemande, UpdateDemandeDto.class);
+            DemandeDto updatedDemandeDto= modelMapper.map(addedDemande, DemandeDto.class);
             return new ResponseEntity<>(updatedDemandeDto, HttpStatus.OK);
 
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.rentalhive.stockManagement.entities;
 
+import com.rentalhive.stockManagement.Enum.DemandeStatus;
 import lombok.Builder;
 import lombok.Value;
 
@@ -27,7 +28,17 @@ public class Demande {
     @NotBlank(message = "The description can not be blank")
     private String description;
 
-    private Boolean accepted;
+    private Boolean accepted=false;
+
+    private DemandeStatus status=DemandeStatus.PENDING;
+
+    public DemandeStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DemandeStatus status) {
+        this.status = status;
+    }
 
     @ManyToOne
     // Can Be Null
