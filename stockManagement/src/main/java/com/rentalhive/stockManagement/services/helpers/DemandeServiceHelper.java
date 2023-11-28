@@ -1,7 +1,7 @@
 /*
 package com.rentalhive.stockManagement.services.helpers;
 
-import com.rentalhive.stockManagement.embeddables.StockQuantity;
+import com.rentalhive.stockManagement.DTO.DemandeDto.StockQuantity;
 import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.Stock;

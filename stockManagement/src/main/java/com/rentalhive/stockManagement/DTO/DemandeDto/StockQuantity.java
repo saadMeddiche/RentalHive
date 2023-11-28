@@ -1,4 +1,4 @@
-package com.rentalhive.stockManagement.embeddables;
+package com.rentalhive.stockManagement.DTO.DemandeDto;
 
 import lombok.Data;
 
