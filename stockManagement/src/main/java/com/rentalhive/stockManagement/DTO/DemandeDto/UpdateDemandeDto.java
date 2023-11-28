@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
 public class UpdateDemandeDto {
 
     private Boolean accepted;
-    // Can Be Null
-    @NotEmpty(message = "The description can not be empty")
-    @NotNull(message = "The description can not be null")
-    @NotBlank(message = "The description can not be blank")
+
     private String description;
 }

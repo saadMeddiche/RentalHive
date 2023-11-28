@@ -135,10 +135,12 @@ public class StockServiceImp extends ServiceHelper implements StockService {
         final Integer[] newCount = {0};
         List<Stock> stocks= stockRepository.findByEquipmentAndStatusName(equipment,"Rented");
         stocks.forEach(s->{
-                    long count=s.getDemandes().stream().filter(d->(d.getDate_reservation().isBefore(demande.getDate_expiration()) || d.getDate_expiration().isAfter(demande.getDate_reservation()))).count();
-                    if(count==0){
-                        newCount[0]++;
-                    }
+            long count=s.getDemandes().stream().filter(d->(d.getDate_reservation().isAfter(demande.getDate_reservation()) && d.getDate_reservation().isBefore(demande.getDate_expiration())) ||
+                    (d.getDate_reservation().isAfter(d.getDate_reservation()) && (d.getDate_expiration().isAfter(demande.getDate_reservation()) && d.getDate_reservation().isBefore(demande.getDate_expiration()))) ||
+                    (d.getDate_reservation().isBefore(demande.getDate_reservation()) && d.getDate_expiration().isAfter(demande.getDate_expiration()))).count();
+            if(count==0){
+                newCount[0]++;
+            }
                 }
         );
         return total + newCount[0];
