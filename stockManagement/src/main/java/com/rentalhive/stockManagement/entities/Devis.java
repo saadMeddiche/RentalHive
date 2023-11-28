@@ -2,18 +2,20 @@ package com.rentalhive.stockManagement.entities;
 
 import com.rentalhive.stockManagement.embeddables.Discount;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+
+@Entity
 public class Devis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @ManyToOne
     @NotNull(message = "The demande can not be null")
     private Demande demande;
 

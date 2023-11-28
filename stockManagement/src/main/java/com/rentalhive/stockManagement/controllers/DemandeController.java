@@ -56,7 +56,7 @@ public class DemandeController extends ControllerHelper {
     }
 
     @PutMapping("/demandes/{id}")
-    public ResponseEntity<?> updateDemande(@PathVariable("id") long id, @RequestBody()UpdateDemandeDto demandeDto) {
+    public ResponseEntity<?> updateDemande(@PathVariable("id") long id, @RequestBody() UpdateDemandeDto demandeDto) {
 
         try {
             Demande demande = modelMapper.map(demandeDto, Demande.class);
