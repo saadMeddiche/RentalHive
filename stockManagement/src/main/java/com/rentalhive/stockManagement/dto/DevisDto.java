@@ -1,6 +1,6 @@
-package com.rentalhive.stockManagement.DTO;
+package com.rentalhive.stockManagement.dto;
 
-import com.rentalhive.stockManagement.DTO.DemandeDto.response.DemandeDto;
+import com.rentalhive.stockManagement.dto.DemandeDto.response.DemandeDto;
 import com.rentalhive.stockManagement.embeddables.Discount;
 import lombok.Data;
 

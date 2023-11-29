@@ -1,4 +1,4 @@
-package com.rentalhive.stockManagement.DTO;
+package com.rentalhive.stockManagement.dto;
 
 import lombok.Data;
 import javax.validation.constraints.NotBlank;

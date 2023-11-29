@@ -69,7 +69,7 @@ public class EquipmentConverter {
 
         equipmentResponseDto.setPrice_per_day(equipment.getPrice_per_day());
 
-        equipmentResponseDto.setCategory_response_dto(CategoryConverter.convertToDto(equipment.getCategory()));
+        equipmentResponseDto.setCategory(CategoryConverter.convertToDto(equipment.getCategory()));
 
         return equipmentResponseDto;
 

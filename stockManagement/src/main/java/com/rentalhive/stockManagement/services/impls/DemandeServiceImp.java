@@ -125,6 +125,7 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         List<Long> ids=new ArrayList<>();
         stockQuantities.forEach(eS->{
             Long id= eS.getEquipmentId();
+            throwExceptionIfIdOfEquipmentIdIsNull(id);
             Integer quantity= eS.getQuantity();
             if(!ids.contains(id)) {
                 ids.add(id);
@@ -163,7 +164,12 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         if (demande.getId() == null) {
             throw new ValidationException(List.of("The ID of demande can not be null"));
         }
+    }
 
+    protected void throwExceptionIfIdOfEquipmentIdIsNull(Long id) {
+        if (id == null) {
+            throw new ValidationException(List.of("The ID of equipment can not be null"));
+        }
     }
 
     protected void throwExceptionIfReservationDateHigherThanExpiredDate(Demande demande) {

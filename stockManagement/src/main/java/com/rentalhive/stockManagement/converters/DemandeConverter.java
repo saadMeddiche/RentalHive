@@ -1,29 +1,24 @@
 /*
-package com.rentalhive.stockManagement.Convert;
+package com.rentalhive.stockManagement.converters;
 
-import com.rentalhive.stockManagement.DTO.DemandeDto.AddDemandeDto;
+import com.rentalhive.stockManagement.DTO.DemandeDto.response.DemandeDto;
 import com.rentalhive.stockManagement.entities.Demande;
+import org.modelmapper.AbstractConverter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 
-public class DemandeConverter extends AbstractConverter<Demande, AddDemandeDto>{
+public class DemandeConverter {
     private final ModelMapper mapper;
 
-    public DemandeConverter(ModelMapper mapper) {
-        mapper.getConfiguration()
-                .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-        this.mapper = mapper;
+    @Override
+    public Demande convertDtoToEntity(DemandeDto demandeDto) {
+        return mapper.map(demandeDto, Demande.class);
     }
 
     @Override
-    public Demande convertDtoToEntity(AddDemandeDto studentDto) {
-        return mapper.map(studentDto, Demande.class);
+    public DemandeDto convertEntityToDto(Demande demande) {
+        return mapper.map(demande, DemandeDto.class);
     }
 
-    @Override
-    public AddDemandeDto convertEntityToDto(Demande student) {
-        return mapper.map(student, AddDemandeDto.class);
-    }
 }
 */

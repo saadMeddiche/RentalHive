@@ -31,6 +31,7 @@ public class GeneratePDF {
             PDAcroForm acroForm = catalog.getAcroForm();
 
             setValue(acroForm, "Nom", name);
+
             setValue(acroForm, "Prenom", prenom);
 
             acroForm.flatten();
