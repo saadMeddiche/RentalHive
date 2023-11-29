@@ -10,10 +10,11 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class GeneratePDF {
 
-    public static void fillPdfTemplate(String templatePath, String outputPath, String name, String prenom) throws IOException {
+    public static void fillPdfTemplate(String templatePath, String outputPath, String nom, String prenom) throws IOException {
 
         try (PDDocument document = PDDocument.load(new File(templatePath))) {
 
@@ -30,7 +31,7 @@ public class GeneratePDF {
 
             PDAcroForm acroForm = catalog.getAcroForm();
 
-            setValue(acroForm, "Nom", name);
+            setValue(acroForm, "Nom", nom);
             setValue(acroForm, "Prenom", prenom);
 
             acroForm.flatten();
@@ -52,7 +53,7 @@ public class GeneratePDF {
 
     public static void main(String[] args) {
         try {
-            fillPdfTemplate("src/main/resources/DevisTemplate.pdf", "src/main/resources/devises/devis.pdf", "Meddiche", "Saad");
+                fillPdfTemplate("src/main/resources/TemplateV2.pdf", "src/main/resources/devises/test.pdf", "Meddiche", "Saad");
             System.out.println("PDF filled successfully.");
         } catch (IOException e) {
             e.printStackTrace();
