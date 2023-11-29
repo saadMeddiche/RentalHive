@@ -1,10 +1,11 @@
 package com.rentalhive.stockManagement.dto.devisDtos.response;
 
+import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Devis;
 
 public class DevisResponseDto {
 
-    //    protected DemandeResponseDto demande;
+    protected Demande demande;
     protected String pathPDF;
     protected Double priceWithOutDiscount;
     protected Double discount;

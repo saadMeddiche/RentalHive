@@ -14,4 +14,6 @@ public interface DemandeService {
     public Demande updateDemand(Demande demande);
 
     public void deleteDemand(Demande demande);
+
+    public Demande findById(Long id);
 }

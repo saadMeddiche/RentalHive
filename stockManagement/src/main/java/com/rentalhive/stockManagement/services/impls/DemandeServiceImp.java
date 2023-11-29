@@ -51,6 +51,18 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         return demandeRepository.save(Ndemande);
     }
 
+    public Demande findById(Long id){
+
+        throwExceptionIfIdOfDemandeIsNull(id);
+
+        Optional<Demande> demande = demandeRepository.findById(id);
+
+        thowExceptionIfDemandeIsEmpty(demande);
+
+        return demande.get();
+
+    }
+
     @Override
     public void deleteDemand(Demande demande) {
            validateDemandeOnDeleting(demande);
@@ -152,6 +164,13 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         }
     }
 
+    protected void thowExceptionIfDemandeIsEmpty(Optional<Demande> demande) {
+
+        if (demande.isEmpty()) {
+            throw new DoNotExistsException("The demande does not exist");
+        }
+    }
+
     protected void throwExceptionIfUserDoNotExist(Demande demande) {
         // throwException If The User exist in the database (user table)
         if (!userService.isExists(demande.getRenter())) {
@@ -170,6 +189,14 @@ public class DemandeServiceImp extends ServiceHelper implements DemandeService {
         if (id == null) {
             throw new ValidationException(List.of("The ID of equipment can not be null"));
         }
+    }
+
+    protected void throwExceptionIfIdOfDemandeIsNull(Long id) {
+        // throwException If The ID of demande Is Null
+        if (id == null) {
+            throw new ValidationException(List.of("The ID of demande can not be null"));
+        }
+
     }
 
     protected void throwExceptionIfReservationDateHigherThanExpiredDate(Demande demande) {
