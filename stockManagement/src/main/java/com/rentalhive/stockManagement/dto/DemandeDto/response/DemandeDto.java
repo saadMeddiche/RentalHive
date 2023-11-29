@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.rentalhive.stockManagement.dto.DemandeDto.StockDto;
-
 @Data
 public class DemandeDto {
 

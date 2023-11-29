@@ -1,8 +1,6 @@
 package com.rentalhive.stockManagement.entities;
 
 import com.rentalhive.stockManagement.Enum.DemandeStatus;
-import lombok.Builder;
-import lombok.Value;
 
 import java.time.LocalDateTime;
 import java.util.List;

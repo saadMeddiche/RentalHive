@@ -1,6 +1,6 @@
-package com.rentalhive.stockManagement.DTO.DemandeDto.response;
+package com.rentalhive.stockManagement.dto.DemandeDto.response;
 
-import com.rentalhive.stockManagement.entities.Stock;
+import com.rentalhive.stockManagement.dto.DemandeDto.StockDto;
 import com.rentalhive.stockManagement.entities.User;
 import lombok.Data;
 
@@ -39,5 +39,5 @@ public class DemandeWithOutIdDto {
     @NotNull(message = "The date of demande can not be null")
     private LocalDateTime date_demande;
 
-    private List<Stock> stocks;
+    private List<StockDto> stocks;
 }
