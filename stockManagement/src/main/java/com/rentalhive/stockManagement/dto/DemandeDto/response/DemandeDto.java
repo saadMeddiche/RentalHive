@@ -8,6 +8,7 @@ import java.util.List;
 import com.rentalhive.stockManagement.dto.DemandeDto.StockDto;
 @Data
 public class DemandeDto {
+
     private String description;
 
     private Boolean accepted;

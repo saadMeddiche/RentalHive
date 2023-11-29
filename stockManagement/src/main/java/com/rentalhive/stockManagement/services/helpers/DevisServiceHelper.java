@@ -21,7 +21,7 @@ public class DevisServiceHelper {
         this.equipmentService = equipmentService;
     }
 
-    BiFunction<Long , Integer, Double> calculatePriceOfQuantityOfSpecificEquipment = (equipmentId, quantity) -> {
+    public BiFunction<Long , Integer, Double> calculatePriceOfQuantityOfSpecificEquipment = (equipmentId, quantity) -> {
 
         Equipment equipment = equipmentService.findById(equipmentId);
 
