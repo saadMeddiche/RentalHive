@@ -49,7 +49,6 @@ public class DevisServiceImp extends DevisServiceHelper implements DevisService 
                     long numberOfDays = getNumberOfDaysBetweenTwoDateTimes(devis.getDemande().getDate_reservation(), devis.getDemande().getDate_expiration());
                     double pricePerDay = equipment.getPrice_per_day(); // Retrieve pricePerDay from Equipment
                     double priceTotal = quantity * numberOfDays * pricePerDay;
-
                     TableRow tableRow = new TableRow();
                     tableRow.setEquipment(equipment.getName()); // Replace with the actual method to get equipment name
                     tableRow.setQuantity(String.valueOf(quantity));
@@ -72,11 +71,6 @@ public class DevisServiceImp extends DevisServiceHelper implements DevisService 
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
-
-
         return null;
     }
 
