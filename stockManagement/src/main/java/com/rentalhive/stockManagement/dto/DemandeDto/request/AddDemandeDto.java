@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Data
 public class AddDemandeDto {
 
-
     @NotEmpty(message = "The description can not be empty")
     @NotNull(message = "The description can not be null")
     @NotBlank(message = "The description can not be blank")
