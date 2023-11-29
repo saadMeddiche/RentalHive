@@ -1,5 +1,7 @@
 package com.rentalhive.stockManagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,7 +30,8 @@ public class Stock {
     @NotNull(message = "The registrationNumber can not be null")
     @NotBlank(message = "the registration number can't be blank")
     private String registrationNumber;
-    @ManyToMany(mappedBy = "stocks")
+    @ManyToMany(mappedBy = "stocks",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Demande> demandes;
 
     public List<Demande> getDemandes() {
