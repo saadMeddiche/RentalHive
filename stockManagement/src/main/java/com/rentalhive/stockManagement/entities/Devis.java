@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -38,6 +39,7 @@ public class Devis {
     private Double priceWithOutDiscount;
 
     @NotNull(message="The discount can not be null")
+    @Valid
     private Discount discount;
 
     @NotNull(message = "The status can not be null")

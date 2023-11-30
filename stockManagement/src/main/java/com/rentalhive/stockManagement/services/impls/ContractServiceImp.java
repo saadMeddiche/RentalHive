@@ -1,8 +1,11 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Contract;
+import com.rentalhive.stockManagement.entities.Devis;
 import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
+import com.rentalhive.stockManagement.generatePDF.GenerateContract;
 import com.rentalhive.stockManagement.helpers.ServiceHelper;
+import com.rentalhive.stockManagement.processors.DevisProcessor;
 import com.rentalhive.stockManagement.repositories.ContractRepository;
 import com.rentalhive.stockManagement.services.ContractService;
 import com.rentalhive.stockManagement.services.DevisService;
@@ -42,6 +45,8 @@ public class ContractServiceImp extends ServiceHelper implements ContractService
     public Contract addContract(Contract contract) {
 
         validateContractOnAdding(contract);
+        String destinationPath=createDestinationPathForContract(contract);
+        createPdfForContract(contract.getDevis().getPathPDF(),destinationPath);
 
         return contractRepository.save(contract);
     }
@@ -84,6 +89,22 @@ public class ContractServiceImp extends ServiceHelper implements ContractService
         if (!userService.isExists(contract.getCreated_by())) {
             throw new DoNotExistsException("The user does not exist");
         }
+    }
+    public String createDestinationPathForContract(Contract contract){
+
+        // Get Current Time In Milliseconds
+        long currentTimeMillis = System.currentTimeMillis();
+
+        return "src/main/resources/contracts/contract-" +
+                contract.getDevis().getDemande().getRenter().getUser_name() +
+                "-" +
+                currentTimeMillis +
+                ".pdf";
+
+    }
+    public void createPdfForContract(String devisPath , String destinationPath){
+        GenerateContract generateContract = new GenerateContract();
+        generateContract.GenerateContractPDF(devisPath , destinationPath);
     }
     public boolean isExists(Contract contract) {
         return contractRepository.existsById(contract.getId());

@@ -4,6 +4,7 @@ import com.rentalhive.stockManagement.dto.DemandeDto.StockQuantity;
 import com.rentalhive.stockManagement.entities.*;
 import com.rentalhive.stockManagement.generatePDF.GenerateDevis;
 import com.rentalhive.stockManagement.generatePDF.TableRow;
+import com.rentalhive.stockManagement.processors.DevisProcessor;
 import com.rentalhive.stockManagement.repositories.DevisRepository;
 import com.rentalhive.stockManagement.services.DevisService;
 import com.rentalhive.stockManagement.services.EquipmentService;
@@ -35,43 +36,20 @@ public class DevisServiceImp extends DevisServiceHelper implements DevisService 
 
     @Override
     public Devis addDevis(Devis devis) {
-        List<Stock> stock = devis.getDemande().getStocks();
 
-        // Group stocks by equipment and count occurrences
-        Map<Equipment, Long> equipmentCountMap = stock.stream()
-                .collect(Collectors.groupingBy(Stock::getEquipment, Collectors.counting()));
+        validateObject(devis);
 
+        String outPutPath = createOutPutPathForDevis(devis);
 
-        List<TableRow> tableRows = equipmentCountMap.entrySet().stream()
-                .map(entry -> {
-                    Equipment equipment = entry.getKey();
-                    long quantity = entry.getValue();
-                    long numberOfDays = getNumberOfDaysBetweenTwoDateTimes(devis.getDemande().getDate_reservation(), devis.getDemande().getDate_expiration());
-                    double pricePerDay = equipment.getPrice_per_day(); // Retrieve pricePerDay from Equipment
-                    double priceTotal = quantity * numberOfDays * pricePerDay;
-                    TableRow tableRow = new TableRow();
-                    tableRow.setEquipment(equipment.getName()); // Replace with the actual method to get equipment name
-                    tableRow.setQuantity(String.valueOf(quantity));
-                    tableRow.setPricePerDay(String.valueOf(pricePerDay));
-                    tableRow.setPriceTotal(String.valueOf(priceTotal));
+        double totalPrice = createPdfForDevis(devis , outPutPath);
 
-                    return tableRow;
-                })
-                .collect(Collectors.toList());
+        devis.setPathPDF(outPutPath);
 
-        // Print or use the tableRows as needed
-        for (TableRow tableRow : tableRows) {
-            System.out.println(tableRow);
-        }
+        devis.setPriceWithOutDiscount(totalPrice);
 
-        GenerateDevis generateDevis = new GenerateDevis();
+        devis.setStatus(Devis.Status.PENDING);
 
-        try {
-            generateDevis.fillDevisTemplate("src/main/resources/DevisTemplateV1.pdf", "src/main/resources/devises/devis.pdf", tableRows ,devis.getDemande().getRenter() , devis.getDemande());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+        return devisRepository.save(devis);
     }
 
 
