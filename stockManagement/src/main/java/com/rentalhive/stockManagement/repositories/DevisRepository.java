@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DevisRepository extends JpaRepository<Devis, Long> {
+    boolean existsByStatus(Devis.Status status);
 }

@@ -2,6 +2,7 @@ package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.dto.DemandeDto.StockQuantity;
 import com.rentalhive.stockManagement.entities.*;
+import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.generatePDF.GenerateDevis;
 import com.rentalhive.stockManagement.generatePDF.TableRow;
 import com.rentalhive.stockManagement.processors.DevisProcessor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,14 @@ public class DevisServiceImp extends DevisServiceHelper implements DevisService 
         this.equipmentService = equipmentService;
     }
 
+
+    public Devis findById(Long id) {
+        Optional<Devis> devis=devisRepository.findById(id);
+        if(devis.isPresent()){
+            return devis.get();
+        }
+        throw new DoNotExistsException("this devis doesn't exist");
+    }
     @Override
     public List<Devis> getAllDevises() {
         return null;
@@ -62,6 +72,9 @@ public class DevisServiceImp extends DevisServiceHelper implements DevisService 
     @Override
     public boolean isExist(Devis devis){
         return devisRepository.existsById(devis.getId());
+    }
+    public boolean isAccepted(Devis devis){
+        return devisRepository.existsByStatus(devis.getStatus());
     }
 
     public Double calculateTotalPrice(List<StockQuantity> listOfEquipmentAndQuantity , Demande demande) {

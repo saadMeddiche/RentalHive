@@ -14,4 +14,7 @@ public interface DevisService {
     public Devis updateDevis(Devis devis);
 
     boolean isExist(Devis devis);
+
+    Devis findById(Long id);
+    boolean isAccepted(Devis devis);
 }
