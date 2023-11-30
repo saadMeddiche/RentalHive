@@ -47,7 +47,7 @@ public class DevisServiceImp extends DevisServiceHelper implements DevisService 
     @Override
     public Devis addDevis(Devis devis) {
 
-        validateObject(devis);
+//        validateObject(devis);
 
         String outPutPath = createOutPutPathForDevis(devis);
 

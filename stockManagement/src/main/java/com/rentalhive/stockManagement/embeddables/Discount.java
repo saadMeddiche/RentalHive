@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 @Embeddable
 public class Discount {
 
-    @Positive
+
     @Max(100)
     @Min(0)
     @NotNull(message="The discount can not be null")

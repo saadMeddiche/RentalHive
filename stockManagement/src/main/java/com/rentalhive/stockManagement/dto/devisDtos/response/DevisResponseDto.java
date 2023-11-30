@@ -6,27 +6,27 @@ import com.rentalhive.stockManagement.entities.Devis;
 
 public class DevisResponseDto {
 
-    protected DemandeDto demande;
-    protected String pathPDF;
+    protected Demande demande;
+    protected String pdf;
     protected Double priceWithOutDiscount;
     protected Double discount;
 
     protected Devis.Status status;
 
-    public DemandeDto getDemande() {
+    public Demande getDemande() {
         return demande;
     }
 
-    public void setDemande(DemandeDto demande) {
+    public void setDemande(Demande demande) {
         this.demande = demande;
     }
 
-    public String getPathPDF() {
-        return pathPDF;
+    public String getPdf() {
+        return pdf;
     }
 
-    public void setPathPDF(String pathPDF) {
-        this.pathPDF = pathPDF;
+    public void setPdf(String pathPDF) {
+        this.pdf = pathPDF;
     }
 
     public Double getPriceWithOutDiscount() {

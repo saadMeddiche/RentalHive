@@ -7,7 +7,12 @@ import com.rentalhive.stockManagement.entities.Demande;
 import com.rentalhive.stockManagement.entities.Devis;
 import com.rentalhive.stockManagement.services.DemandeService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Base64;
 
 @Component
 public class DevisConverter {
@@ -15,7 +20,7 @@ public class DevisConverter {
     private final DemandeService demandeService;
 
 
-
+    @Autowired
     public DevisConverter(DemandeService demandeService) {
         this.demandeService = demandeService;
 
@@ -34,12 +39,27 @@ public class DevisConverter {
         return devis;
     }
 
-    public static DevisResponseDto convertToDto(Devis devis){
+    public static DevisResponseDto convertToDto(Devis devis) throws Exception{
 
-        ModelMapper modelMapper = new ModelMapper();
+       DevisResponseDto devisResponseDto = new DevisResponseDto();
 
-        DevisResponseDto devisResponseDto = modelMapper.map(devis, DevisResponseDto.class);
+        devisResponseDto.setDemande(devis.getDemande());
+
+        devisResponseDto.setPdf(encodeFileToBase64(devis.getPathPDF()));
+
+        devisResponseDto.setPriceWithOutDiscount(devis.getPriceWithOutDiscount());
+
+        devisResponseDto.setStatus(devis.getStatus());
 
         return  devisResponseDto;
+    }
+
+    // Thanks to Khalid Fifel
+    public static String encodeFileToBase64(String filepath) throws Exception {
+        File file = new File(filepath);
+
+        byte[] encoded = Files.readAllBytes(file.toPath());
+
+        return Base64.getEncoder().encodeToString(encoded);
     }
 }
