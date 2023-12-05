@@ -12,7 +12,6 @@ public class EquipmentResponseDto {
 
     protected String name;
     protected Double price_per_day;
-
     protected CategoryResponseDto category;
 
 }

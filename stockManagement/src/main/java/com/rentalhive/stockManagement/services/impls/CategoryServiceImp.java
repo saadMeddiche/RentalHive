@@ -1,6 +1,7 @@
 package com.rentalhive.stockManagement.services.impls;
 
 import com.rentalhive.stockManagement.entities.Category;
+import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.repositories.CategoryRepository;
 import com.rentalhive.stockManagement.services.CategoryService;
 
@@ -24,7 +25,14 @@ public class CategoryServiceImp extends CategoryServiceHelper implements Categor
     }
 
     public List<Category> getAllCategorys() {
-        return null;
+
+        List<Category> categories = categoryRepository.findAll();
+
+        if(categories.isEmpty()){
+            throw new EmptyListException("There are no Categories");
+        }
+
+        return categories;
     }
 
     public Category findById(Long id) {

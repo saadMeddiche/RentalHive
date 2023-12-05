@@ -6,12 +6,7 @@ import com.rentalhive.stockManagement.exceptions.costums.DoNotExistsException;
 import com.rentalhive.stockManagement.exceptions.costums.EmptyListException;
 import com.rentalhive.stockManagement.exceptions.costums.NotMatchedException;
 import com.rentalhive.stockManagement.exceptions.costums.ValidationException;
-import com.rentalhive.stockManagement.exceptions.handlers.AlreadyExistsExceptionHandler;
-import com.rentalhive.stockManagement.exceptions.handlers.DateValidationExceptionHandler;
-import com.rentalhive.stockManagement.exceptions.handlers.DoNotExistsExceptionHandler;
-import com.rentalhive.stockManagement.exceptions.handlers.EmptyListExceptionHandler;
-import com.rentalhive.stockManagement.exceptions.handlers.NotMatchedExceptionHandler;
-import com.rentalhive.stockManagement.exceptions.handlers.ValidationExceptionHandler;
+import com.rentalhive.stockManagement.exceptions.handlers.*;
 import com.rentalhive.stockManagement.exceptions.interfaces.ExceptionHandler;
 
 public class ExceptionHandlerFactory {
@@ -42,6 +37,10 @@ public class ExceptionHandlerFactory {
             return new EmptyListExceptionHandler();
         }
 
-        return null;
+
+
+        // Default ExceptionHandler
+        return new DefaultExceptionHandler();
+
     }
 }
