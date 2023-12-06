@@ -10,6 +10,7 @@ import javax.validation.constraints.Positive;
 @Data
 public class EquipmentResponseDto {
 
+    protected Long id;
     protected String name;
     protected Double price_per_day;
     protected CategoryResponseDto category;

@@ -23,4 +23,5 @@ public interface EquipmentService {
 
     public Optional<Equipment> findEquipmentById(Long id);
 
+
 }

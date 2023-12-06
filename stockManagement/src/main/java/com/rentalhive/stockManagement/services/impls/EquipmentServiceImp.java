@@ -45,6 +45,8 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
         return equipmentRepository.findById(equipment.getId());
     }
 
+
+    @Override
     public Equipment findById(Long id) {
 
         throwExceptionIfIdOfEquipmentIsNull(id);
@@ -81,6 +83,8 @@ public class EquipmentServiceImp extends EquipmentServiceHelper implements Equip
     public Optional<Equipment> findEquipmentById(Long id){
         return equipmentRepository.findById(id);
     }
+
+
 
     public boolean isExist(Equipment equipment){
 

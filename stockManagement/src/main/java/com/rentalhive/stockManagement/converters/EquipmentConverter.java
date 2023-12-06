@@ -65,6 +65,8 @@ public class EquipmentConverter {
 
         EquipmentResponseDto equipmentResponseDto = new EquipmentResponseDto();
 
+        equipmentResponseDto.setId(equipment.getId());
+
         equipmentResponseDto.setName(equipment.getName());
 
         equipmentResponseDto.setPrice_per_day(equipment.getPrice_per_day());

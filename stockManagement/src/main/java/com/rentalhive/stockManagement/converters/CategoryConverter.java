@@ -9,6 +9,8 @@ public  class  CategoryConverter {
 
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
 
+        categoryResponseDto.setId(category.getId());
+
         categoryResponseDto.setName(category.getName());
 
         return categoryResponseDto;

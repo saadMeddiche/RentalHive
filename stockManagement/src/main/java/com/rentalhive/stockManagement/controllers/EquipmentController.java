@@ -46,6 +46,17 @@ public class EquipmentController extends ControllerHelper {
 
     }
 
+    @GetMapping("/equipments/{id}")
+    public ResponseEntity<?> getEquipmentById(@PathVariable("id") long id) {
+        try {
+            Equipment equipment = equipmentService.findById(id);
+            EquipmentResponseDto equipmentResponseDto = EquipmentConverter.convertToDto(equipment);
+            return new ResponseEntity<>(equipmentResponseDto, HttpStatus.OK);
+        }catch (Exception e){
+            return getResponseEntityDependingOnException(e);
+        }
+    }
+
     @PostMapping("/equipments")
     public ResponseEntity<?> addEquipment(@RequestBody EquipmentRequestAddDto equipmentAddDto) {
 
