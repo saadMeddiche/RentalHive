@@ -2,6 +2,9 @@ package com.rentalhive.stockManagement.DTOs;
 
 
 public class StockResponseDTO {
+
+    private Long id;
+
     private String registrationNumber;
 
     private StatusDTO status;
@@ -9,7 +12,8 @@ public class StockResponseDTO {
     private UserDTO added_by;
     private EquipmentDTO equipment;
 
-    public StockResponseDTO(String registrationNumber, StatusDTO status, UserDTO added_by, EquipmentDTO equipment) {
+    public StockResponseDTO(Long id, String registrationNumber, StatusDTO status, UserDTO added_by, EquipmentDTO equipment) {
+        this.id = id;
         this.registrationNumber = registrationNumber;
         this.status = status;
         this.added_by = added_by;
@@ -17,6 +21,14 @@ public class StockResponseDTO {
     }
 
     public StockResponseDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getRegistrationNumber() {

@@ -16,8 +16,7 @@ public interface StockService {
     public abstract Stock addStock(Stock stock);
 
     public abstract Stock updateStock(Stock stock);
-
-
+    public Stock findById(Long id);
     public abstract void deleteStock(Long id);
     public abstract void deleteStock(Stock stock);
     public Integer countAvailableStocksForEquipment(Equipment equipment);

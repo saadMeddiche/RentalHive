@@ -41,6 +41,22 @@ public class ServiceHelper {
         }
     }
 
+
+
+    protected  <O> void validateObject2(O object){
+
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+        Set<ConstraintViolation<O>> violations= validator.validate(object);
+
+        if(!violations.isEmpty()) return;
+
+        List<String> errors = violations.stream().map(ConstraintViolation::getMessage).toList();
+
+        throw new ValidationException(errors);
+
+    }
+
     /**
      * Throws an exception if the object is null.
      *

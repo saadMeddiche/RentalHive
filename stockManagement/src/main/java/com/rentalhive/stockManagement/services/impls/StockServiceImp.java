@@ -48,6 +48,20 @@ public class StockServiceImp extends ServiceHelper implements StockService {
         return stocksList;
     }
 
+    public Stock findById(Long id){
+        if(id == null){
+            throw new ValidationException(List.of("Id Of The Stock can not be null"));
+        }
+
+        Optional<Stock> stock = stockRepository.findById(id);
+
+        if(stock.isEmpty()){
+            throw new DoNotExistsException("The stock With Id :" + id+ "Do not Exist");
+        }
+
+        return stock.get();
+    }
+
     public Stock addStock(Stock stock) {
         validateObject(stock);
         Long statusId = stock.getStatus().getId();

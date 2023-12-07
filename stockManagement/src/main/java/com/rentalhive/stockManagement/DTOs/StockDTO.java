@@ -6,8 +6,6 @@ import com.rentalhive.stockManagement.entities.User;
 
 public class StockDTO {
     private String registrationNumber;
-
-
     private Long added_by_id;
     private Long equipment_id;
 

@@ -3,7 +3,9 @@ package com.rentalhive.stockManagement.controllers;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.rentalhive.stockManagement.DTOs.*;
 import com.rentalhive.stockManagement.converters.CategoryConverter;
+import com.rentalhive.stockManagement.converters.EquipmentConverter;
 import com.rentalhive.stockManagement.dto.categoryDtos.response.CategoryResponseDto;
+import com.rentalhive.stockManagement.dto.equipmentDtos.response.EquipmentResponseDto;
 import com.rentalhive.stockManagement.entities.Equipment;
 import com.rentalhive.stockManagement.entities.User;
 import com.rentalhive.stockManagement.helpers.ControllerHelper;
@@ -59,6 +61,20 @@ public class StockRestController extends ControllerHelper {
         }
     }
 
+    @GetMapping("/stocks/{id}")
+    public ResponseEntity<?> getStockById(@PathVariable("id") long id) {
+        try {
+
+            Stock stock = stockService.findById(id);
+
+            StockResponseDTO stockDTO = convertToDTO(stock);
+
+            return new ResponseEntity<>(stock, HttpStatus.OK);
+        }catch (Exception e){
+            return getResponseEntityDependingOnException(e);
+        }
+    }
+
     @PutMapping("/stocks/{id}")
     public ResponseEntity<?> updateStock(@PathVariable("id") long id, @RequestBody StockDTO stockDTO) {
         try{
@@ -78,7 +94,7 @@ public class StockRestController extends ControllerHelper {
     public ResponseEntity<?> deleteStock(@PathVariable("id") long id) {
         try{
             stockService.deleteStock(id);
-            return new ResponseEntity<>("the stock deleted successfully",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }catch(Exception e){
             return getResponseEntityDependingOnException(e);
         }
@@ -95,6 +111,7 @@ public class StockRestController extends ControllerHelper {
 
     private StockResponseDTO convertToDTO(Stock stock) {
         StockResponseDTO stockResponseDTO = new StockResponseDTO();
+        stockResponseDTO.setId(stock.getId());
         CategoryConverter categoryConverter=new CategoryConverter();
         stockResponseDTO.setRegistrationNumber(stock.getRegistrationNumber());
         User added_by=stock.getAdded_by();
