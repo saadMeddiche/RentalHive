@@ -22,8 +22,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -172,5 +174,10 @@ public class StockServiceImp extends ServiceHelper implements StockService {
         stocks.addAll(stockRepository.findByEquipmentAndStatusName(equipment,"Available",pageable));
         return stocks;
     }
+
+
+    public List<Stock> getAvailableStocks(Long equipmentId , LocalDateTime dateReservation, LocalDateTime dateExpiration){
+        return stockRepository.getAvailableStocks(equipmentId,dateReservation,dateExpiration);
+    };
 
 }

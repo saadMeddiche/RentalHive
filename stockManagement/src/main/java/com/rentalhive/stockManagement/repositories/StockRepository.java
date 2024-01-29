@@ -22,22 +22,16 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     List<Stock> findByEquipmentAndStatusName(Equipment equipment, String statusName,Pageable pageable);
     List<Stock> findByEquipmentAndStatusName(Equipment equipment, String statusName);
     Integer  countByEquipmentAndStatusName(Equipment equipment, String statusName);
-/*    @Query("SELECT DISTINCT s FROM Stock s LEFT JOIN FETCH s.demandes d " +
-            "WHERE s.equipment = :equipment " +
-            "AND (d IS EMPTY OR (d.date_reservation > :endDate AND d.date_expiration < :givenDate) )")*/
-/*    List<Stock> findStocksWithSpecificEquipmentAndDemandConditions(
-             Equipment equipment,
-             LocalDateTime endDate,
-             LocalDateTime givenDate,
-             Pageable pageable
-    );*/
-/*    @Query("SELECT DISTINCT count(s) FROM Stock s LEFT JOIN FETCH s.demandes d " +
-            "WHERE s.equipment = :equipment " +
-            "AND (d IS EMPTY OR (d.date_reservation > :endDate AND d.date_expiration < :givenDate))")*/
-/*    Integer countStocksWithSpecificEquipmentAndDemandConditions(
-             Equipment equipment,
-             LocalDateTime endDate,
-             LocalDateTime givenDate
-    );*/
+    @Query("SELECT s FROM Stock s WHERE s.equipment.id = :equipmentId " +
+            "AND NOT EXISTS (" +
+            "    SELECT 1 FROM StockDates sd " +
+            "    WHERE sd.stock.id = s.id " +
+            "      AND (" +
+            "          :dateReservation BETWEEN sd.date_reservation AND sd.date_expiration " +
+            "          OR :dateExpiration BETWEEN sd.date_reservation AND sd.date_expiration " +
+            "          OR sd.date_reservation BETWEEN :dateReservation AND :dateExpiration" +
+            "      )" +
+            ")" )
+    public List<Stock> getAvailableStocks(Long equipmentId , LocalDateTime dateReservation, LocalDateTime dateExpiration);
 
 }

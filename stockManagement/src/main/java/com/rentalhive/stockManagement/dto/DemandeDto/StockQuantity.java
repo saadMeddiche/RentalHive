@@ -9,4 +9,9 @@ public class StockQuantity {
 
     private Long equipmentId;
 
+    public StockQuantity(Integer quantity, Long equipmentId){
+        this.quantity = quantity;
+        this.equipmentId = equipmentId;
+    }
+
 }

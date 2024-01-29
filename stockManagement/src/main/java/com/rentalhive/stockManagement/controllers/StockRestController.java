@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.rentalhive.stockManagement.DTOs.*;
 import com.rentalhive.stockManagement.converters.CategoryConverter;
 import com.rentalhive.stockManagement.converters.EquipmentConverter;
+import com.rentalhive.stockManagement.dto.DemandeDto.request.AddDemandeDto;
 import com.rentalhive.stockManagement.dto.categoryDtos.response.CategoryResponseDto;
 import com.rentalhive.stockManagement.dto.equipmentDtos.response.EquipmentResponseDto;
 import com.rentalhive.stockManagement.entities.Equipment;
@@ -57,6 +58,16 @@ public class StockRestController extends ControllerHelper {
             return new ResponseEntity<>(stockDTOList, HttpStatus.OK);
         }catch(Exception e){
             System.out.println("not stocks");
+            return getResponseEntityDependingOnException(e);
+        }
+    }
+
+    @PostMapping("/stocks/available/equipment/{id}")
+    public ResponseEntity<?> getCountOfAvailableStocksByEquipment(@PathVariable("id") long id , AddDemandeDto demandeDto) {
+        try {
+            Long count = stockService.getAvailableStocks(id, demandeDto.getDate_reservation(), demandeDto.getDate_expiration()).stream().count();
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch(Exception e){
             return getResponseEntityDependingOnException(e);
         }
     }
